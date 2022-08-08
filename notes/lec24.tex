@@ -1,0 +1,96 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 24: Oracle TMs \& \(\P^{\sf NP}\)}
+\author{Marcythm}
+% \date{\today}
+\date{July 26, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+recall: \(\Sigma_1\P = \NP, \Pi_1\P = \coNP, \Sigma_0\P = \Pi_0\P = \P, \PH = \bigcup_{k \in N} \Sigma_k\P = \bigcup_{k \in N} \Pi_k\P\) (different notations)
+
+\begin{theorem}
+  \(\NP = \P \implies \PH = \P\).
+\end{theorem}
+
+\begin{proposition}
+  \(\prob{MC} \in \Pi_2\P\), where \prob{MC} means \prob{MINIMUM-CIRCUIT}.
+\end{proposition}
+
+\begin{proof}
+  Given \(C\), \(\encoding{C} \in \prob{MC} \iff \forall \encoding{C'}, |C'| < |C|: \exists y, |y| = \text{\# inputs to \(C, C'\)}: C(y) \neq C'(y)\). The innermost statement \(C(y) \neq C'(y)\) is what the verifier \(V\) checks.
+\end{proof}
+
+\begin{corollary}
+  \(\NP = \P (\iff \prob{SAT} \in \P) \implies \prob{MC} \in \P\).
+\end{corollary}
+
+\begin{proof}
+  For fixed \(C, C'\) what left to decide?
+  ``\(\exists y: C(y) \neq C'(y)\)'', which is known as DCF (Different Circuit Functionality problem) in hw4: \(\prob{DCF} \in \NP\).
+  By assumption \(\prob{DCF} \in \P\), so exists poly-time deterministic TM \(A\) deciding \prob{DCF}.
+  Now \(\encoding{C} \in \prob{MC} \iff \forall \encoding{C'}, |C'| < |C|: \encoding{C, C'} \in \prob{DCF} \iff \forall \encoding{C'}: A(\encoding{C, C'})\ \text{accepts}\).
+  Reverse the accept/reject condition, we get \(\prob{MC} \in \coNP \implies \ol{\prob{MC}} \in \NP \implies \ol{\prob{MC}} \in \P \implies \prob{MC} \in \P\).
+\end{proof}
+
+Suppose we can solve \prob{SAT} efficiently, we can solve a bunch of problems (\prob{3COL}, \prob{UNSAT}, \prob{HAMPATH}, etc.) efficiently, also \ldots \prob{MIN-CIRCUIT}?
+
+ketpoint: Having a black box solving a problem is not as good as having the \ul{code} for the problems.
+
+To formalize ``pesudocode'' with an unimplemented {\tt SolveSAT()} function:
+
+\begin{definition}
+  A \prob{SAT}-oracle TM is a TM with an extra power: an r/w ``oracle tape'', and an extra instruction ``ORACLE''. When operating ORACLE instruction, if oracle tape contains \(y\), it's replaced by ``1'' if \(y \in \prob{SAT}\), and ``0'' if \(y \notin \prob{SAT}\), with a cost of only 1 step.
+\end{definition}
+
+\begin{definition}
+  More generally, we can define a \(B\)-oracle TM for every language \(B\).
+\end{definition}
+
+\begin{definition}
+  \(\P^{\prob{SAT}} = \setof{L : \text{\(L\) solvable in poly-time by a \prob{SAT}-oracle TM}}\).
+\end{definition}
+
+e.g. \(\NP \subseteq \P^{\prob{SAT}}, \coNP \subseteq \P^{\prob{SAT}}, \prob{CHROMATIC4} \in \P^{\prob{SAT}}\), but \prob{MINIMUM-CIRCUIT} may not in \(\P^{\prob{SAT}}\).
+
+\(\P^{B} \subseteq \P^{\prob{SAT}}\) if \(B \in \NP\), and \(\P^{B} = \P^{\prob{SAT}}\) if \(B\) is \NP-complete (also for \coNP-complete).
+
+\begin{notation}
+  \(\P^\NP = \P^{\prob{SAT}}\).
+\end{notation}
+
+\begin{definition}[Turing reduction (Cook reduction)]
+  \(A \leq_T^P B\) if \(A \in \P^B\).
+\end{definition}
+
+\begin{theorem}
+  \(\P^\NP \subseteq \Sigma_2\P\).
+\end{theorem}
+
+\begin{proof}
+  Assume \(L \in \P^\NP\) solved by poly-time \prob{SAT}-oracle TM \(A\), need poly-time verifier \(V(x, u_1, u_2)\) s.t. \(x \in L \iff A(x)\ \text{acc} \iff \exists u_1 \forall u_2 V(x, u_1, u_2)\ \text{acc}\). Here
+  \[ u_1 = \encoding{\text{answers (and satisfying assignments if satisfiable) to \(A(x)\)'s oracle queries}} \]
+  \[ u_2 = \encoding{\text{some assignments for those unsatisfiable \(\phi\)s in \(u_1\)}} \]
+  \(V(x, u_1, u_2)\) checks those satisfying assignments in \(u_1\), and checks all the assignments given in \(u_2\) cannot satisfy the corresponding \(\phi\)s, then simulates \(A(x)\).
+\end{proof}
+
+\begin{corollary}
+  \(\co\P^\NP = \P^\NP\), so \(\P^\NP \subseteq \Pi_2\P\).
+\end{corollary}
+
+\section{Reading}
+
+\subsection{sipser 6.3 (Turing Reducibility)}
+
+definition of ``decidable relative'', Turing reducible
+
+\subsection{sipser 9.2 (Relativization)}
+
+definition of oracle Turing Machine
+
+\end{document}

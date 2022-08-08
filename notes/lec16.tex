@@ -1,0 +1,114 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 16: Space Complexity}
+\author{Marcythm}
+% \date{\today}
+\date{July 19, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+\begin{definition}
+  {\it Space complexity} of a decider TM is a function \(S: \N \to \N\) s.t.
+  \[ S(n) = \max_{|x| = n} \setof{\text{\# distinct tape cells accessed by \(M(x)\)}} \].
+\end{definition}
+
+another version: read-only input tape, work tapes, for sublinear spaces.
+
+\begin{remark}
+  To simulate multitape TM with space \(S\), only needs single-tape TM with space \(O(S)\).
+\end{remark}
+
+\begin{definition}
+  \( \SPACE(f(n)) = \setof{A : \text{exists a TM deciding \(A\) with space complexity \(O(f(n))\)}} \).
+\end{definition}
+
+\begin{fact}
+  Using \(O(\log n)\) space a TM on input \(x\) can compute (write in base 2) \(n = |x|\).
+\end{fact}
+
+\begin{definition}
+  \( \L = \SPACE(\log n) \).
+\end{definition}
+
+e.g. \( A = \setof{0^n 1^n : n \in \N} \in \L\). \( \prob{PALINDROMES} \in \L \)
+
+Intuitively, \L is pesudocode with constant (i.e. \(O(1)\)) \# of variables, which are ints ranging from \(0\) to \(\poly(n)\). no array/memory allocation, read-only input lookups, basic arith ops on vars.
+
+\( \prob{ST-PATH} = \setof{ \encoding{G, s, t} : \text{exists path \(s \to t\) in G}} \), in \L? BFS in \(\Theta(n)\) space, DFS the same.
+
+\begin{theorem}[Savitch's Theorem '70]
+  \( \prob{ST-PATH} \in \SPACE(\log^2 n) \).
+\end{theorem}
+
+\begin{theorem}[Reingold '04]
+  Undirected \(\prob{ST-PATH} \in \L\).
+\end{theorem}
+
+\( \prob{CIRCUIT-EVAL} = \setof{ \encoding{C, x} : C(x) = 1 } \in \P\), doable in linear space, believed not in sublinear space.
+
+\prob{3SAT}: \(O(n)\) space.
+
+\begin{definition}
+  \( \PSPACE = \bigcup_{k \in \N} \SPACE(n^k) \).
+\end{definition}
+
+\begin{exercise}
+  \( \NP \subseteq \PSPACE \).
+\end{exercise}
+
+\begin{fact}
+  \( \TIME(f(n)) \subseteq \SPACE(f(n)) \).\ e.g. \( \P \subseteq \PSPACE \).
+\end{fact}
+
+\begin{theorem}
+  For \(f(n) \geq \log n\), \( \SPACE(f(n)) \subseteq \TIME(2^{O(f(n))}) \).
+\end{theorem}
+
+\begin{corollary}
+  \( \L \subseteq \P \).
+\end{corollary}
+
+\begin{corollary}
+  \( \PSPACE \subseteq \EXP \).
+\end{corollary}
+
+current hierarchy: \( \L \subseteq \P \subseteq \setof{\NP | \coNP} \subseteq \PSPACE \subseteq \EXP \).
+
+interesting: find a problem in \P but not in \L; in \PSPACE but not in \(\NP \cup \coNP\).
+
+already knows \( \P \neq \EXP \) by T.H.T, so whether \( \P \neq \PSPACE \) or \( \PSPACE \neq \EXP \)?
+
+\begin{definition}
+  \(f(n)\) is {\it space-constructible} iff \(f(n) \geq \log n\) and can compute \(f(n)\) in \(O(f(n))\) space.
+\end{definition}
+
+\begin{theorem}[Space Hierarchy Theorem]
+  Let \(f(n)\) be a space-constructible function, then exists language \(A \in \SPACE(f(n))\) thats \(\notin \SPACE(g(n))\) for any \(g(n) = o(f(n))\).
+\end{theorem}
+
+\section{Reading}
+
+\subsection{sipser 8.0 (Space Complexity)}
+
+\begin{enumerate}
+  \item definition of \SPACE and \NSPACE.
+  \item Space appears to be more powerful than time because space can be reused, whereas time cannot.
+\end{enumerate}
+
+\subsection{sipser 8.1 (Savitch's Theorem)}
+
+\begin{theorem}[Savitch's Theorem]
+  For any function \(f: \N \to \R^+\), where \(f(n) \geq n\),
+  \[ \NSPACE(f(n)) \subseteq \SPACE(f^2(n)) \]
+\end{theorem}
+
+\subsection{sipser 8.2 (The Class \PSPACE)}
+
+definition of \PSPACE, so far \( \P \subseteq \NP \subseteq \PSPACE = \NPSPACE \subseteq \EXP \).
+
+\end{document}

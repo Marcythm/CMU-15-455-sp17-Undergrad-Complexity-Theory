@@ -1,0 +1,71 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 22: \BPP}
+\author{Marcythm}
+% \date{\today}
+\date{July 24, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+\begin{definition}
+  \BPP, bounded probability of error probability computation (two sided-error prob poly time), \(L \in \BPP\) if \(\exists\) PTM \(N\) s.t.
+  \[ \begin{aligned}
+    x \in L &\implies \Pr\bracks{\text{\(N(x)\) accept}} \geq 2/3 \\
+    x \notin L &\implies \Pr\bracks{\text{\(N(x)\) accept}} \leq 1/3
+  \end{aligned} \]
+\end{definition}
+
+current hierarchy: \(\P \subseteq \ZPP \subseteq \RP, \coRP \subseteq \RP \cup \coRP \subseteq \BPP\), all these are believed to be equal!
+
+Alternative View: DTM \(M(x, r)\) with input \(x\) and a random tape input \(r\).
+
+\begin{lemma}
+  \(\BPP \subseteq \EXP\).
+\end{lemma}
+
+\begin{corollary}
+  \(\BPP \subseteq \PSPACE\).
+\end{corollary}
+
+\(\BPP \subseteq \NP\)? not known. Even cannot separate \BPP from \NEXP.
+
+\begin{theorem}
+  \(\P = \NP \implies \P = \BPP\) (contra: \(\P \neq \BPP \implies \P \neq \NP\)).
+\end{theorem}
+
+\begin{definition}
+  {\sf P/poly} is the class of languages with a circuit family of poly size deciding it.
+\end{definition}
+
+\begin{theorem}
+  \(\BPP \subseteq {\sf P/poly}\).
+\end{theorem}
+
+\begin{proof}
+  \(L \in \BPP\), \(\exists\) DTM \(M\), \(M(x, r)\) acc with \(p \geq 1 - 2^{-2|x|}\) if \(x \in L\), acc with \(p \leq 2^{-2|x|}\) if \(x \notin L\) in poly time.
+  \(M\) can be translated into poly size circuit \(C_M\), which has two kinds of inputs, \(x\) and \(r\). The \(r\) input is what we should get rid of. \\
+  For each fixed \(x \in \setof{0, 1}^n\), all but \(1/4^n\) of random coins \(r\) yield correct answer. Since only \(2^n\) possible \(x\) and \(1/4^n\) bad \(r\) for each, there are at most \(1/2^n\) \(r\)s are bad for some \(x\), i.e. most of \(r\)s are simultaneously good for all \(x\), so find them and hardwire them into circuit.
+\end{proof}
+
+Derandomization:
+
+\begin{theorem}['98]
+  If \prob{3SAT} requires circuit family of size \(2^{\delta n}\) for some \(\delta > 0\), then \P = \BPP.
+\end{theorem}
+
+two major steps: (worst-case hardness) to (strong average-case hardness) to (PRNG)
+
+\section{Reading}
+
+\subsection{sipser 10.2 (Probabilistic Algorithms)}
+
+\subsubsection{Read-Once Branching Programs}
+
+proof of \({\it EQ}_{\prob{ROBQ}} \in \BPP\): construct polynomial, randomly select an element in finite field.
+
+\end{document}

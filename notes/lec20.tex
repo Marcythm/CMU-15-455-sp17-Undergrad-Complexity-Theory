@@ -1,0 +1,54 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 20: The Immerman-Szelepcsényi Theorem}
+\author{Marcythm}
+% \date{\today}
+\date{July 22, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+complete the proof of \prob{TQBF}'s \PSPACE-hardness.
+
+\begin{fact}
+  \NPSPACE = \coNPSPACE = \PSPACE
+\end{fact}
+
+a ``scaled down'' version: \NL = \coNL?
+
+\begin{theorem}[Immerman-Szelepcsényi '88]
+  \NL = \coNL.
+\end{theorem}
+
+\begin{proof}
+  Show exists log-space verifier \(V\) that \(\encoding{G, s, t} \notin \prob{ST-PATH}\).
+
+  Let \(R_l\) be \(\setof{\text{vertices reachable from \(s\) in \(\leq l\) steps}}\), \(r_l = R_l\), the certificate is like concatenation of cert for \(r_1\), cert for \(r_2\), \ldots, cert for \(r_n\), and cert that \(t\) not reachable from \(s\).
+
+  ketpoint: After \(V\) processed cert for \(r_l\), only retains \(l, r_l\) on its work tapes.
+
+  Suppose \(V\) now convinced of \(r_n\), what cert would convince \(V\) that \(t \notin R_n\)?
+
+  cert of \(t \notin R_n\) consists of: \(s \to v_1, s \to v_2, \ldots, s \to v_{r_n}\).
+
+  \(V\) checks:
+  \begin{enumerate}
+    \item each path is in \(G\) (\(O(\log n)\))
+    \item exactly \(r_n\) paths presented (check in \(O(\log n)\) space by presenting endpoints in strictly increasing order)
+    \item and \(t\) is not among the endpoints (\(O(\log n)\))
+  \end{enumerate}
+
+  cert of \(r_{l+1}\): \(v_1 \in R_{l+1}, \ldots, v_{r_{l+1}} \in R_{l+1}, v_{r_{l+1} + 1} \notin R_{l+1}, \ldots, v_n \notin R_{l+1}\).
+
+  cert of \(v_x \notin R_{l+1}\): list all vertices in \(R_l\) (in incr order), check no edge connects them them to \(v_x\).
+\end{proof}
+
+\section{Reading}
+
+\subsection{sipser 8.6 (\NL Equals \coNL)}
+
+\end{document}

@@ -1,0 +1,80 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 11: NP-Completeness and the Cook-Levin Theorem}
+\author{Marcythm}
+% \date{\today}
+\date{July 14, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+Recap: poly-time mapping reduction \(\leq_m^P\), \( \prob{3COL} \leq_m^P \prob{4COL} \leq_m^P \prob{SAT} \leq_m^P \prob{CIRCUIT-SAT} \leq_m^P \prob{3SAT} \).
+Actually \(\prob{3SAT} \leq_m^P \prob{3COL}\) (which is hw5 p4), and this will be shown in the next lecture.
+
+\begin{theorem}[Cook-Levin Theorem]
+  \( \forall L \in \NP, L \leq_m^P \prob{SAT} (\prob{3SAT}, \prob{3COL}) \).
+\end{theorem}
+
+\begin{corollary}
+  If \(\prob{SAT} (\prob{3SAT}, \prob{3COL}) \in \P\), \(\P = \NP\).
+\end{corollary}
+
+\begin{definition}
+  Language \(S\) is called \NP-hard, if \(\forall L \in \NP, L \leq_m^P S\). (i.e.\ as hard as all problems in \NP).
+\end{definition}
+
+\begin{remark}
+  \(S\) is \NP-hard does not imply \(S \in \NP\).
+\end{remark}
+
+\begin{definition}
+  Language \(S\) is \NP-complete iff \(S\) is \NP-hard and \(S \in \NP\).
+\end{definition}
+
+\begin{theorem}
+  If \(S\) is \NP-complete, \( S \in \P \iff \P = \NP \).
+\end{theorem}
+
+\begin{theorem}
+  Suppose algo \(A\) is in time \(T(n) \geq n\) on length-\(n\) inputs, then there exists circuit \(C\) of size \(O(T(n)^2)\) outputs the same answer as \(A\). (Furthermore, the circuit can be built in poly-time if \(T(n) = kn^k\).)
+\end{theorem}
+
+\begin{proof}
+  Denote \(S_i^t \in \Gamma \cup Q\) as the symbol on location \(i\) of the TM's configuration at time \(t\).
+
+  \begin{claim}
+    \(S_i^k\) only depends on \(S_{i-1}^{k-1}, S_{i-1}^k, S_{i-1}^{k+1}, S_{i-1}^{k+2}\). To be precise,
+    \[ S_i^k = \begin{cases}
+      S_{i-1}^k, & S_{i-1}^{k-1} \notin \Gamma \\
+      f_{\delta}\parens{S_{i-1}^{k-1}, S_{i-1}^k}, & S_{i-1}^{k-1} \in \Gamma
+    \end{cases} \]
+  \end{claim}
+
+  Thus every symbol in configuration of any time can be written in boolean formula of symbols in previous configuration. Apply this recursively, we can construct the final output (i.e.\ the symbol in the final (\(t = T(n)\)) configuration) within boolean formula of \(T(n)^2\) symbols and \(T(n)^2\) size, one \(T(n)\) for each step and another for each space.
+\end{proof}
+
+\section{Reading}
+
+\subsection{Sipser 9.3 (Circuit Complexity)}
+
+\begin{enumerate}
+  \item Definition of boolean circuit, circuit family, size/depth complexity
+  \item Alternative proof of Cook-Levin Theorem, using boolean circuit (actually the one presented on class)
+  \begin{theorem}
+    For \(t(n) \geq n\), if \(A \in \TIME(t(n))\) then \(A\) has circuit complexity \(O(t^2(n))\).
+  \end{theorem}
+
+  \item \prob{CIRCUIT-SAT}/\prob{3SAT} is \NP-complete.
+\end{enumerate}
+
+\subsection{Sipser 7.4 (\NP-completeness)}
+
+\begin{enumerate}
+  \item Proof of Cook-Levin Theorem, using \prob{SAT} directly.
+\end{enumerate}
+
+\end{document}

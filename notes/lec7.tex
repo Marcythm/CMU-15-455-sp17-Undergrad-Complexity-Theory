@@ -1,0 +1,100 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 7: SAT}
+\author{Marcythm}
+% \date{\today}
+\date{July 11, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+Different SAT problems:
+\begin{enumerate}
+  \item \prob{CIRCUIT-SAT}
+  \item \prob{FORMULA-SAT} a.k.a \prob{SAT}
+  \item \prob{CNF-SAT}
+  \item \prob{k-SAT}
+  \item \prob{3-SAT}
+\end{enumerate}
+bigger id number means less generality.
+
+Boolean circuit \(C\), which is acyclic graph, has \(n\) inputs \(x_1, \ldots, x_n\), and one output. Gates in \(C\) includes \(\vee, \wedge, \neg\) with fan-in \(2, 2, 1\) respectively. Circuit \(C\) computes a boolean function \(C\) or \(f_C: \setof{0, 1}^n \to \setof{0, 1}\).
+When input to algo is a circuit \(\encoding{C}\), we measure runtime in terms of \(n := \text{\# input gates}, m := \text{\# total gates}\). \(n \leq m \leq \abs{\encoding{C}} \leq O(m \log m)\).
+
+\begin{remark}
+  One circuit only operates on strings of a fixed length.
+\end{remark}
+
+\begin{definition}[CIRCUIT-EVAL]
+  Given \(\encoding{C, x}\), whether \(C(x)\) evaluates to \(1\)?
+  \[ \prob{CIRCUIT-EVAL} = \setof{\encoding{C, x} : C(x) = 1} \]
+\end{definition}
+
+\(\prob{CIRCUIT-EVAL} \in \P\), and even in time \(O(m)\), but it's not \ul{parallelizable}.
+
+\begin{definition}[\prob{CIRCUIT-SAT}]
+  Given \(\encoding{C}\), is there an \(x\) s.t. \(C(x) = 1\)?
+  \[ \prob{CIRCUIT-SAT} = \setof{\encoding{C} : \exists x: C(x) = 1} \]
+\end{definition}
+
+Brute force: \(O(2^n \poly(n))\). \( \prob{CIRCUIT-SAT} \in \P \iff \P = \NP \).
+
+\begin{definition}[\prob{FORMULA-SAT}]
+  ``Formula'' = Circuit where all fan-outs are \(1\).
+\end{definition}
+
+\begin{definition}[\prob{CNF-SAT}]
+  Special case of \prob{FORMULA-SAT}: formula is a big AND of ``clauses'', which is formed by OR of ``literals'' (variable or negated variable). For CNF, \(m\) is defined as \# of clauses.
+\end{definition}
+
+\prob{CNF-SAT} is in \EXP, with a brute force in \(O(2^n m)\). Also \NP-complete.
+
+\begin{definition}[\prob{k-SAT}]
+  Special case of \prob{CNF-SAT} where all clauses have \(\leq k\) literals.
+\end{definition}
+
+Brute force: \(O(2^n \poly(n))\). Also \NP-complete.
+
+\begin{theorem}[Sch '99, MS '10]
+  \( \prob{3-SAT} \in \TIME(1.34^n) \).
+\end{theorem}
+
+\begin{algorithm}[h]
+  \caption{randomized algorithm for \prob{3-SAT}}
+  \begin{algorithmic}[1]
+    \Procedure{WalkSAT}{$\phi$}
+      \For{\(t = 1 \ldots (4/3)^n\)}
+        \State pick \(x \in \setof{0, 1}^n\) at random
+        \For{\(u = 1 \ldots n^2\)}
+          \If{\(x\) satisfies \(\phi\)}
+            \State output YES
+          \Else
+            \State pick a random clause \(c\) not satisfied by \(x\)
+            \State flip \(x\)'s assignment on a random variable in \(c\)
+          \EndIf
+        \EndFor
+      \EndFor
+      \State output NO
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+\newpage
+\begin{theorem}
+  If \(\phi\) is satisfiable, then \(\Pr(\text{algo outputs NO}) \to 0\) as \(n \to \infty\).
+\end{theorem}
+
+\begin{enumerate}
+  \item \( \prob{4-SAT} \in \TIME(1.5^n \poly(n)) \)
+  \item \( \prob{5-SAT} \in \TIME(1.6^n \poly(n)) \)
+  \item \( \prob{6-SAT} \in \TIME(1.667^n \poly(n)) \)
+  \item \( \prob{7-SAT} \in \TIME(1.7143^n \poly(n)) \)
+  \item \ldots
+  \item \( \prob{k-SAT} \in \TIME((2 - 2/k)^n \poly(n)) \). In fact today's fastest algo is about \(O\parens{2^{(1 - \pi^2/6k) n}}\).
+\end{enumerate}
+
+\end{document}

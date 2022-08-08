@@ -1,0 +1,103 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 13: Search-to-Decision, Padding, Dichotomy Theorems}
+\author{Marcythm}
+% \date{\today}
+\date{July 16, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+What we are going to do:
+\begin{enumerate}
+  \item Deciding \prob{SAT} is hard. Is searching even harder?
+  \item Maybe \(\prob{SAT} \notin \P\), how fast \ul{can} we solve it?
+  \item \(\prob{LIS} \in \P\), even \(\in \TIME(n^2)\). Is it \(\in \TIME(n^{1.9})\)?
+  \item Other resources (e.g.\ space, random interaction)?
+  \item \(\prob{2SAT} \in \P\), \prob{3SAT} \NP-complete. Why?
+  \item Is every \(L \in \NP\) either \(\in \P\) or \NP-complete?
+  \item Maybe \prob{SAT} ``almost in'' \P?
+\end{enumerate}
+
+Suppose \P = \NP, then \(\prob{CIRCUIT-SAT} \in \P\), exists poly-time algo \(M_{\prob{CSAT}}\) s.t.
+\[ M_{\prob{CSAT}}(C) = \begin{cases}
+  \mathrm{yes}, & \text{if \(C\) is satisfiable} \\
+  \mathrm{no}, & \text{if \(C\) is not satisfiable}
+\end{cases} \]
+then we can decide a satisfying assignment bit-by-bit.
+
+For \prob{3COL}, the subinstance to find solution is \prob{3COL+UNARY} in homework 6.
+
+\prob{CSAT} is ``downward'' self-reducible.
+
+\begin{theorem}
+  Suppose \(L \in \NP\), with verifier \(V(x, y)\). Assume \P = \NP, then exists poly-time algo \(S\) s.t. \(\forall x \in L, V(x, S(x))\) accepts.
+\end{theorem}
+
+\begin{proof}
+  Use the idea of Cook-Levin Theorem. Given \(x \in L\), construct a circuit \(C_x(y)\) that does the same as \(V(x, y)\).
+  Then \(S(x) = C(x, y)\) is a solution.
+\end{proof}
+
+A complexity theory ``trick'': \ul{padding}
+
+\begin{theorem}
+  \( \P = \NP \implies \EXP = \NEXP \) (contrapositive: \( \EXP \neq \NEXP \implies \P \neq \NP \))
+\end{theorem}
+
+\begin{proof}
+  Asuume \P = \NP, need to show \(\NEXP \subseteq \EXP\).
+  Let \(L \in \NEXP\), say \(M\) is a nondet TM deciding \(L\) in time \(2^{n^k}\).
+  Let \(L_{\it pad} = \setof{\encoding{x, 1^{2^{|x|^k}}} : x \in L}\).
+
+  \begin{claim}
+    \(L_{\it pad} \in \NP\).
+  \end{claim}
+
+  \begin{proof}
+    Define \(M'\) a nondet TM. Given input \(y\), it first check if \(y = \encoding{x, 1^{2^{|x|^k}}}\) in time about \(O(|y|)\), then throws away 1s, gets \(x\), and simulate nondet \(M(x)\) in time \(O(2^{n^k}) = O(|y|)\).
+  \end{proof}
+
+  Then \(L_{\it pad} \in \P\). Let \(A\) be poly-time algo deciding \(L_{\it pad}\).
+
+  \begin{claim}
+    \(L \in \EXP\).
+  \end{claim}
+
+  \begin{proof}
+    Let \(A'\) be TM with input \(x\), it runs \(A(\encoding{x, 1^{2^{|x|^k}}})\) in time \(O(\poly(2^{|x|^k}) = 2^{O(n^k)}\), i.e. \(A'\) is in exponential time, so \(L \in \EXP\).
+  \end{proof}
+
+\end{proof}
+
+\begin{enumerate}
+  \item World 1: \NP = \P + \NP-hard + something else
+  \item World 2: \NP = \P + \NP-hard
+  \item World 3: \P = \NP
+\end{enumerate}
+
+\begin{theorem}[Schaefer's Dichotomy Theorem '78]
+  Every boolean CSP is either in \P (basically \prob{2SAT}, \prob{XOR-SAT}, \prob{Horn-SAT}) or \NP-complete (everything else).
+\end{theorem}
+
+\begin{theorem}[Bulatov '06]
+  Same theorem for ternary CSP, i.e. \(|D| = 3\). e.g. \prob{3-COL}.
+\end{theorem}
+
+\begin{conjecture}[Dichotomy Conjecture]
+  Every CSP is either in \P or \NP-complete.
+\end{conjecture}
+
+upcoming: a theorem that shows world 2 is generally impossible.
+
+\begin{theorem}[Ladner's Theorem]
+  Assume \(\P \neq \NP\), then \( \exists L \in \NP \) s.t. \( L \notin \P \) and \(L\) is not \NP-complete.
+\end{theorem}
+
+such \(L\)s are mostly unnatural. Maybe a natural \(L\): \prob{GRAPH-ISOMORPHISM}. Fastest algo is \(\TIME(n^{\log^{10} n})\) (Babai '16).
+
+\end{document}

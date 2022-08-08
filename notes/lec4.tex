@@ -1,0 +1,85 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+\usepackage{xspace}
+
+\title{Undergraduate Complexity Theory \\ Lecture 4: Time Complexity and Universal Turing Machines}
+\author{Marcythm}
+% \date{\today}
+\date{July 9, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+Recap: simulate 3-tape TM with 1-tape TM. 3-tape TM \(M_3\) use \(T(n)\) time and at most \(T(n)\) symbols, then 1-tape TM \(M_1\) use \(3T(n) = O(T(n))\) symbols, and thus \(O(T(n))\) time to simulate each step of \(M_3\), so total time is \(O(T(n)) T(n) = O(T(n)^2)\).
+
+\begin{theorem}[Hennie '65]
+  Any 1-tape TM solving \prob{PALINDROME} needs \(\Omega(n^2)\) time.
+\end{theorem}
+
+\begin{definition}
+  Let \(t: \N \to \R^+\), e.g. \(t(n) = n^2\), define
+  \[ \TIME(t(n)) = \setof{L : \text{exists a TM deciding language \(L\) in \(O(t(n))\) time}} \]
+\end{definition}
+
+e.g. \(\prob{PALINDROME} \in \TIME(n^2)\)
+
+\begin{remark}
+  complexity class = set of languages.
+\end{remark}
+
+\begin{remark}
+  Big O notation is built into the definition of complexity class.
+\end{remark}
+
+\begin{fact}[Speedup Theorem]
+  Say exists a TM deciding language \(L\) in \(5n^3\) time, then exists \ldots in \(n^3\) time, also \(\frac{1}{100}n^3\), \(\frac{1}{1000}n^3\) \ldots
+\end{fact}
+
+\begin{definition}
+  The complexity class \(\P = \bigcup_{k \in \N} \TIME(n^k)\), i.e.\ all languages decidable in polynomial time by a TM.
+\end{definition}
+
+\begin{remark}
+  The definition of \P is very robust, since it doesn't depend on the model anymore.
+\end{remark}
+
+Any problems provably not in \P? \(\prob{HALTING}\) problem: no decider solving this problem.
+
+\begin{definition}
+  \[ \prob{ACCEPTS} = \setof{\encoding{M, w} : \text{\(M\) is a TM with input alphabet \(\Sigma\), \(w \in \Sigma^*\), \(M(w)\) accepts}} \]
+\end{definition}
+
+\begin{fact}
+  There is a ``Universal Turing Machine'' \(U\), that takes as input \(\encoding{M, w}\) and simulates \(M(w)\).
+\end{fact}
+
+Use {\bf diagonalization method} to prove that \prob{ACCEPTS} is not decidable.
+
+The next lecture: Time Hierarchy Theorem
+
+\begin{theorem}[Time Hierarchy Theorem, Informally]
+  Given more time, a Turing machine can solve more problems.
+\end{theorem}
+
+\section{Reading}
+
+\subsection{Sipser 7.2 (The Class \P)}
+
+\begin{enumerate}
+  \item Exponential time algorithms typically arise when we solve problems by exhaustively searching through a space of solutions, called brute-force search
+  \item All reasonable deterministic computational models are polynomially equivalent.
+  \item \P is a mathematically robust class: invariant for all models of computation that are polynomially equivalent to the deterministic single-tape TM
+  \item use DP and CNF to prove every CFL is in \P
+\end{enumerate}
+
+\subsection{Sipser 4.2 (Undecidablity)}
+
+\begin{enumerate}
+  \item diagonalization method: prove \(A_{\it TM}\) is not decidable
+  \item decidable = recognizable + co-recognizable
+\end{enumerate}
+
+\end{document}

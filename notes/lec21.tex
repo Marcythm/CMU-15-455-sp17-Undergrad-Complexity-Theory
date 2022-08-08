@@ -1,0 +1,114 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 21: Randomized Complexity: \RP, \coRP, and \ZPP}
+\author{Marcythm}
+% \date{\today}
+\date{July 23, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+Computational resources: randomness
+
+Can you save time/space if you allow randomness?
+
+Why randomness? Even for decision problems, with nothing to do with randomness. Sometimes the fastest algo we know is randomized.
+
+Why not randomness?
+error: can generally reduce error to \(< 2^{-n}\) prob at expense of factor \(O(n)\) in time.
+where to get random bits? in practice PRNG.
+
+Randomize algo = A-OK, randomized poly-time = ``feasible algo''. some faster randomized algos:
+
+\begin{enumerate}
+  \item Primality Testing
+  \item Median Finding
+  \item Verifying Matrix Multiplication
+  \item Minimum Spanning Tree
+  \item \prob{3SAT}
+  \item Undirected \prob{ST-PATH}
+  \item Bipartitle Perfect Matching
+  \item Polynomial Identity Testing
+\end{enumerate}
+
+\begin{definition}
+  A {\it probabilistic (randomized) TM} is a normal TM with two transition functions \(\delta_0, \delta_1\). In its computation, at each step either \(\delta_0\) or \(\delta_1\) is used with probability half each, independently. For each input \(x\), we care about \(\Pr\bracks{\text{\(M(x)\) accepts}}\).
+\end{definition}
+
+\begin{remark}
+  We assume \(M(x)\) always halts for all \(x\).
+\end{remark}
+
+\begin{definition}
+  \(M\) decides language \(L\) with one-sided error \(\eps\) if
+  \[ \begin{aligned}
+    \forall x \in L: \Pr\bracks{\text{\(M(x)\) acc}} &\geq 1 - \eps \\
+    \forall x \notin L: \Pr\bracks{\text{\(M(x)\) acc}} &= 0
+  \end{aligned} \]
+  i.e. no false positive.
+\end{definition}
+
+% There are still ``worst-case'' for RTM, i.e.\ for all input \(x\) \ldots.
+
+Randomness from algo itself (not input)
+
+\begin{definition}
+  \[ \RTIME(f(n)) = \setof{L : \text{\(\exists\) prob \(M\) with running time \(O(f(n))\) which accepts \(L\) with one-sided error \(1/3\)}} \]
+\end{definition}
+
+\begin{definition}
+  {\it Running time} of a RTM \(M\) is the maximum number of steps \(M(x)\) may take over all possible random choices, similar to the definition on NTM.
+\end{definition}
+
+\begin{lemma}[Success amplification / error reduction]
+  Suppose \(M\) decides \(L\) with one-sided error \(\eps\). Let \(k \in \N\), define TM \(M^{(k)}\): on input \(x\), run \(M(x)\) \(k\) times. If ever accepts, overall accept. If all runs reject, at end rejects. Then \(M^{(k)}\) decides \(L\) with one-sided error \(1-\eps^k\).
+\end{lemma}
+
+\begin{definition}
+  \( \RP = \bigcup_{k \in \N} \RTIME(n^k) \).
+\end{definition}
+
+\begin{proposition}
+  \( \P \subseteq \RP \subseteq \NP \).
+\end{proposition}
+
+Recall: \( \prob{COMPOSITES} \in \NP \).
+
+\begin{theorem}['74]
+  \( \prob{COMPOSITES} \in \RP \).
+\end{theorem}
+
+\begin{proof}
+  Let \(x \in \N\), write \(x = 2^s d\) where \(d\) is odd. \(b \in \N\) is called a ``compositeness witness'' for \(x\) if:
+  \[ b^d \not\equiv 1 \pmod{x}, b^d, b^{2d}, b^{4d}, \ldots, b^{2^{s-1}d} \not\equiv -1 \pmod{x}\]
+  If \(x\) is prime, then no \(b\) is a witness for \(x\). If \(x\) is composite, \(\geq 3/4\) of all \(b's\) in \([0, x)\) are witnesses for \(x\). Check whether \(0 \leq b < x\) is a witness is in time \(\poly(|x|)\). \\
+  Miller-Rabin'25: Pick a random \(0 \leq b < x\), check if it's a witness. \(x \in \prob{COMPS} \implies \Pr\bracks{\text{acc}} = 3/4 > 2/3\)
+\end{proof}
+
+\begin{corollary}
+  \(\prob{PRIMES} \in \coRP\).
+\end{corollary}
+
+\begin{theorem}
+  \(\P \in \coRP \subseteq \coNP\).
+\end{theorem}
+
+\begin{theorem}[Adlemm-Huang '87]
+  \(\prob{PRIMES} \in \RP\). witnesses for primality easily checkable \& findable with randomness.
+\end{theorem}
+
+\begin{definition}
+  \(\ZPP = \RP \cap \coRP\). (Zero-sided error)
+\end{definition}
+
+\section{Reading}
+
+\subsection{sipser 10.2 (Probabilistic Algorithms)}
+
+definition of \BPP, Probabilistic TM, amplification lemma
+
+\end{document}

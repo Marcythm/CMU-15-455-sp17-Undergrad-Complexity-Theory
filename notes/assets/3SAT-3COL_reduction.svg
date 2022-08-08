@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="720px" height="522px" viewBox="0 0 720 522" enable-background="new 0 0 720 522" xml:space="preserve">
+<path fill="#FFFFE6" stroke="#000000" d="M603,321c0,6.627-5.373,12-12,12h-48c-6.627,0-12-5.373-12-12V201c0-6.627,5.373-12,12-12
+	h48c6.627,0,12,5.373,12,12V321z"/>
+<path fill="#FFFFE6" stroke="#000000" d="M513,321c0,6.627-5.373,12-12,12h-48c-6.627,0-12-5.373-12-12V201c0-6.627,5.373-12,12-12
+	h48c6.627,0,12,5.373,12,12V321z"/>
+<path fill="#FFFFE6" stroke="#000000" d="M423,321c0,6.627-5.373,12-12,12h-48c-6.627,0-12-5.373-12-12V201c0-6.627,5.373-12,12-12
+	h48c6.627,0,12,5.373,12,12V321z"/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="387,225 387,297 693,261 "/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="477,225 477,297 693,261 "/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="567,225 567,297 693,261 "/>
+<path fill="#FFFFE6" stroke="#C69C6D" d="M585,21c0-6.627-5.373-12-12-12H381c-6.627,0-12,5.373-12,12v120c0,6.627,5.373,12,12,12
+	h192c6.627,0,12-5.373,12-12V21z"/>
+<polyline fill="none" stroke="#000000" stroke-width="2" points="693,333 549,45 693,261 "/>
+<path fill="#FFFFE6" stroke="#C69C6D" d="M225,465c0,6.627-5.373,12-12,12H21c-6.627,0-12-5.373-12-12V345c0-6.627,5.373-12,12-12
+	h192c6.627,0,12,5.373,12,12V465z"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="189" y1="297" x2="189" y2="369"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="117" y1="297" x2="117" y2="369"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="45" y1="297" x2="45" y2="369"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="45" y1="441" x2="117" y2="441"/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="45,441 117,369 45,369 "/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="189,369 189,441 117,441 "/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="261,369 261,441 189,441 "/>
+<path fill="#FFFFE6" stroke="#C69C6D" d="M153,177c0,6.627-5.373,12-12,12H21c-6.627,0-12-5.373-12-12v-48c0-6.627,5.373-12,12-12
+	h120c6.627,0,12,5.373,12,12V177z"/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="45,153 81,81 117,153 "/>
+<circle fill="#FFFFFF" stroke="#000000" cx="45" cy="153" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="117" cy="153" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="81" cy="81" r="18"/>
+<text transform="matrix(1 0 0 1 65.7241 84)" font-family="Liberation Serif" font-style="normal" font-size="10">Ground</text>
+<text transform="matrix(1 0 0 1 106.6597 157.9995)"><tspan x="0" y="0" font-family="Liberation Serif" font-style="normal" font-size="21">~</tspan><tspan x="11.361" y="0" font-family="Liberation Serif" font-style="italic" font-size="21">x</tspan></text>
+<text transform="matrix(1 0 0 1 40.3398 158)" font-family="Liberation Serif" font-style="italic" font-size="21">x</text>
+<circle fill="#FFFFFF" stroke="#000000" cx="45" cy="369" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="117" cy="369" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="189" cy="369" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="45" cy="297" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="117" cy="297" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="189" cy="297" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="45" cy="441" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="117" cy="441" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="189" cy="441" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="261" cy="369" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="261" cy="441" r="18"/>
+<text transform="matrix(1 0 0 1 38.0825 302)"><tspan x="0" y="0" font-family="Liberation Serif" font-style="italic" font-size="21">t</tspan><tspan x="5.834" y="5" font-family="Liberation Serif" font-style="normal" font-size="16">0</tspan></text>
+<text transform="matrix(1 0 0 1 110.083 302)"><tspan x="0" y="0" font-family="Liberation Serif" font-style="italic" font-size="21">t</tspan><tspan x="5.834" y="5" font-family="Liberation Serif" font-style="normal" font-size="16">1</tspan></text>
+<text transform="matrix(1 0 0 1 182.083 302)"><tspan x="0" y="0" font-family="Liberation Serif" font-style="italic" font-size="21">t</tspan><tspan x="5.834" y="5" font-family="Liberation Serif" font-style="normal" font-size="16">2</tspan></text>
+<text transform="matrix(1 0 0 1 245.7241 372)" font-family="Liberation Serif" font-style="normal" font-size="10">Ground</text>
+<text transform="matrix(1 0 0 1 250.4458 444)" font-family="Liberation Serif" font-style="normal" font-size="10">False</text>
+<path fill="#FFFFE6" stroke="#C69C6D" d="M585,501c0,6.627-5.373,12-12,12H381c-6.627,0-12-5.373-12-12V381c0-6.627,5.373-12,12-12
+	h192c6.627,0,12,5.373,12,12V501z"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="567" y1="297" x2="549" y2="405"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="477" y1="297" x2="477" y2="405"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="387" y1="297" x2="405" y2="405"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="405" y1="477" x2="477" y2="477"/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="405,477 477,405 405,405 "/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="549,405 549,477 477,477 "/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="693,261 693,333 549,477 "/>
+<circle fill="#FFFFFF" stroke="#000000" cx="405" cy="405" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="477" cy="405" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="549" cy="405" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="387" cy="297" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="477" cy="297" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="567" cy="297" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="405" cy="477" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="477" cy="477" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="549" cy="477" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="693" cy="261" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="693" cy="333" r="18"/>
+<text transform="matrix(1 0 0 1 677.7246 264)" font-family="Liberation Serif" font-style="normal" font-size="10">Ground</text>
+<text transform="matrix(1 0 0 1 682.4453 336)" font-family="Liberation Serif" font-style="normal" font-size="10">False</text>
+<line fill="none" stroke="#000000" stroke-width="2" x1="567" y1="225" x2="549" y2="117"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="477" y1="225" x2="477" y2="117"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="387" y1="225" x2="405" y2="117"/>
+<line fill="none" stroke="#000000" stroke-width="2" x1="405" y1="45" x2="477" y2="45"/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="405,45 477,117 405,117 "/>
+<polygon fill="none" stroke="#000000" stroke-width="2" points="549,117 549,45 477,45 "/>
+<circle fill="#FFFFFF" stroke="#000000" cx="405" cy="117" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="477" cy="117" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="549" cy="117" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="387" cy="225" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="477" cy="225" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="567" cy="225" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="405" cy="45" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="477" cy="45" r="18"/>
+<circle fill="#FFFFFF" stroke="#000000" cx="549" cy="45" r="18"/>
+<text transform="matrix(1 0 0 1 382.3398 230.0005)" font-family="Liberation Serif" font-style="italic" font-size="21">x</text>
+<text transform="matrix(1 0 0 1 472.3398 230.0005)" font-family="Liberation Serif" font-style="italic" font-size="21">y</text>
+<text transform="matrix(1 0 0 1 557.2324 230)"><tspan x="0" y="0" font-family="Liberation Serif" font-style="normal" font-size="21">~</tspan><tspan x="11.361" y="0" font-family="Liberation Serif" font-style="italic" font-size="21">z</tspan></text>
+<text transform="matrix(1 0 0 1 376.6582 302)"><tspan x="0" y="0" font-family="Liberation Serif" font-style="normal" font-size="21">~</tspan><tspan x="11.361" y="0" font-family="Liberation Serif" font-style="italic" font-size="21">x</tspan></text>
+<text transform="matrix(1 0 0 1 466.6582 302)"><tspan x="0" y="0" font-family="Liberation Serif" font-style="normal" font-size="21">~</tspan><tspan x="11.361" y="0" font-family="Liberation Serif" font-style="italic" font-size="21">y</tspan></text>
+<text transform="matrix(1 0 0 1 562.9141 302)" font-family="Liberation Serif" font-style="italic" font-size="21">z</text>
+</svg>

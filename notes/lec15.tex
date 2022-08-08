@@ -1,0 +1,88 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 15: \coNP}
+\author{Marcythm}
+% \date{\today}
+\date{July 18, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+idea: \NP: efficiently certifying \(x \in L\), \coNP: efficiently certifying \(x \notin L\). Recall \prob{UNSAT} in hw5.
+
+\begin{definition}
+  \( \coNP = \setof{L : \ol{L} \in \NP} \).
+\end{definition}
+
+\begin{remark}
+  \( \coNP \neq \ol{NP} \).
+\end{remark}
+
+\begin{theorem}
+  \( \prob{SAT} \in \P \implies \prob{UNSAT} \in \P \).
+\end{theorem}
+
+\begin{theorem}
+  \( A \leq_m^\P B \iff \ol{A} \leq_m^\P \ol{B} \).
+\end{theorem}
+
+\begin{theorem}
+  \P is closed under complement.
+\end{theorem}
+
+\begin{theorem}
+  \( \P \subseteq \coNP \).
+\end{theorem}
+
+\begin{theorem}
+  \( \P = \NP \implies \P = \coNP \).
+\end{theorem}
+
+\begin{corollary}
+  \( \P = \NP \implies \coNP = \NP \).
+\end{corollary}
+
+\begin{corollary}
+  \( \coNP \neq \NP \implies \P \neq \NP \).
+\end{corollary}
+
+\begin{theorem}
+  \prob{UNSAT} is \coNP-complete.
+\end{theorem}
+
+\begin{proof}
+  \( \forall A \in \coNP: \ol{A} \in \NP \implies A \leq_m^\P \ol{A} \leq_m^\P \prob{SAT} \leq_m^\P \prob{UNSAT} \).
+\end{proof}
+
+\begin{definition}
+  \( \prob{TAUTOLOGY} = \setof{ \encoding{\phi} : \text{every truth assignment makes \(\phi\) true}} \).
+\end{definition}
+
+\( \prob{TAUTOLOGY} \in \NP \)? \( \prob{TAUTOLOGY} \in \coNP \)? \( \ol{\prob{TAUTOLOGY}} \in \NP \implies \prob{TAUTOLOGY} \in \coNP \).
+
+\( \prob{PRIME} \in \coNP \).
+
+review:
+\begin{enumerate}
+  \item \( L \in \NP \): \(\forall x \in L\), \(\exists\) succinct efficiently checkable proof of \(x \in L\).
+  \item \( L \in \coNP \): \(\forall x \notin L\), \(\exists\) succinct efficiently checkable proof of \(x \notin L\).
+  \item \( L \in \NP \cap \coNP \): \ldots, has ``good characterization''.\ e.g.
+
+  \begin{enumerate}
+    \item \prob{PERFECT-MATCHING}, obviously in \NP.
+    Suppose the graph \(G = (L, R, E)\), the Hall's Theorem: \(\forall S \subseteq L: |N(S)| \geq |S|\) implies \(G\) has PM, which is the converse of the intuition: \(\exists S \subseteq L: |N(S)| < |S|\) implies \(G\) has no PM. Then also \(\prob{PERFECT-MATCHING} \in \coNP\). Actually, \( \prob{PERFECT-MATCHING} \in \P \). \\
+    \item A similar question: \(\prob{LinearProgramming} \in \NP \cap \coNP\), whether it's in \P? unknown til now. \\
+    \item \( \prob{PRIMES} \in \NP \) is shown in 1975 by Pratt, thus it's also in \( \NP \cap \coNP \). It's proven in \P. \\
+    \item \( \prob{FACTOR} \in \NP \cap \coNP\), here \( \prob{FACTOR} = \setof{\encoding{X, A, B}: \text{\(X\) has a prime factor between \(A\) and \(B\)}} \).
+  \end{enumerate}
+\end{enumerate}
+
+\begin{theorem}
+  \(B\) is prime iff \(\exists A \in [1, B)\) s.t. \(A, A^2, A^3, \ldots, A^{B-2} \neq 1 \pmod{B}\).
+\end{theorem}
+
+\end{document}

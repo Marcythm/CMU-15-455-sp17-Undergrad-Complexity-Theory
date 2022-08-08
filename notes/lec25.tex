@@ -1,0 +1,119 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 25: Interactive Proofs: \IP = \PSPACE}
+\author{Marcythm}
+% \date{\today}
+\date{July 29, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+past lectures: complexity theory from its inception in the mid 60s up to the end of the 80s (space, time, randomness).
+next: get close to future, a glimpse past the 80s.
+
+\begin{enumerate}
+  \item today: I.P. (early 90s)
+  \item Thurs: average case hardness, hardness of approximation, Feige's Hypothesis (early '00s)
+  \item next Tues: Hardness within \P (mid 2010's)
+  \item next Thurs: why \P vs \NP hard? (1975) \\
+  ``people are frustrated by the inability to prove it, they started proving theorems about why it's hard to prove it b/c they had nothing else they could do.''
+\end{enumerate}
+
+Proof Systems: statement \(S\) (e.g. \(x \in L\)), all-powered (i.e. can do computation in arbitrary time) prover \(P\) who always try to convince verifier that \(S\) is true by giving proof \(y\), verifier \(V\) who will do some poly-time computation on the statement \(S\) and the proof \(y\) given by \(P\) where
+\[ \begin{aligned}
+  x \in L &\implies \exists y: V(x, y) = 1 \\
+  x \notin L &\implies \forall y: V(x, y) = 0
+\end{aligned} \]
+
+Those language \(L\) with such a proof system are those in \NP.
+
+Interactive Proof System: the prover and the verifier are allowed to interact like: \(P\) send a proof \(y_1\) to \(V\), \(V\) send message \(q_1\) back to \(P\) which is thought to be a question, \(P\) answers the question with \(y_2\), \ldots, and after poly \# of rounds \(V\) do the poly-time computation \(V(y_1, q_1, \ldots, y_n, q_n)\) which satisfies similar requirements. (all messages are in poly length.)
+
+\begin{fact}
+  If the verifier is deterministic, there are no difference between interactive proof system and the non-interactive one, since the prover can predict all the question \(V\) will ask, and prepare the answers, send them all in the first round.
+\end{fact}
+
+What if \(V\) is {\bf randomized}? Consider \(\ol{\prob{GISO}}\), where \(\prob{GISO} := \prob{GRAPH-ISOMORPHISM}\).
+\(\ol{\prob{GISO}}\) has an interactive proof system: \(V\) sends to \(P\) a randomly relabeled version \(H\) of a randomly picked (from the two) graph \(G_i\), and ask \(P\) to guess which graph this is. If \(P\) guessed correctly, then accept, otherwise reject. For the case that input \(\encoding{G_0, G_1} \in \ol{\prob{GISO}}\), \(\Pr\bracks{\text{\(V\) accepts}} = 1\). If \(\encoding{G_0, G_1} \notin \ol{\prob{GISO}}\), \(\Pr\bracks{\text{\(V\) accepts}} = 1/2\) whatever the strategy \(P\) choose.
+
+\begin{definition}
+  \(\IP[k]\) contains those language \(L\) having a \(k\)-round i.p. system where
+  \[ \begin{aligned}
+    x \in L &\implies \text{\(\exists\) Prover strategy s.t. \(\Pr\bracks{V(\ldots) = 1} \geq 2/3\)} \\
+    x \notin L &\implies \text{\(\forall\) Prover strategy s.t. \(\Pr\bracks{V(\ldots) = 1} \leq 1/3\)}
+  \end{aligned} \]
+\end{definition}
+
+\begin{definition}
+  \(\IP = \IP\bracks{\poly(n)}\). The class is intuitively those having efficient interactive proof systems.
+\end{definition}
+
+\begin{observation}
+  \(\NP \subseteq \IP[1]\).
+\end{observation}
+
+\begin{observation}
+  \(\BPP \subseteq \IP[0]\).
+\end{observation}
+
+\begin{fact}
+  Randomized provers doesn't ``help'', i.e. won't have ability to prove any new language.
+\end{fact}
+
+\begin{fact}
+  For fixed verifier, given some \(x\), can compute \(\displaystyle \max_{\text{prover strategy}} \Pr\bracks{\text{\(V \leftarrow P\) acc on \(x\)}}\) w/ \(\poly(|x|)\) space.
+\end{fact}
+
+\begin{corollary}
+  \(\IP \subseteq \PSPACE\). i.e. prover can be modeled by a poly-space TM.
+\end{corollary}
+
+\begin{theorem}
+  If change the \(2/3\) in the definition of \IP to \(1\), it doesn't change \IP. i.e. you can automatically upgrade two-sided error i.p. system to one-sided error one.
+\end{theorem}
+
+\begin{fact}
+  If the verifier shows the result of its random coin flips to prover, it doesn't change \IP too.
+\end{fact}
+
+In '80s, people thought \IP is ``not much more'' than ``randomized \NP''.
+In '88, Fortnow-Sipser conjectured \(\ol{\prob{3SAT}} \notin \IP\).
+But in '89, LFKN proved \(\ol{\prob{3SAT}} \in \IP\) (a stronger result: \(\prob{\#3SAT} \in '\IP\)).
+Two weeks later, Shamir '89 showed that \(\prob{TQBF} \in \IP\), i.e. \(\PSPACE \subseteq \IP\), hence \(\PSPACE = \IP\).
+
+Proof sktech of \(\prob{\#3SAT} \in '\IP\):
+for formula \(\phi\) with \(n\) variables and \(m\) clauses, construct polynomial \(q(x_1, \ldots, x_n)\), e.g. \((1 - (1 - x_1)(1 - x_3)x_5) (1 - x_2 x_4 (1 - x_6)) \cdots\) for \((x_1 \vee x_3 \vee \ol{x_5}) \wedge (\ol{x_2} \vee \ol{x_4} \vee x_6) \wedge \cdots\).
+Thus we can convert the problem into a more algebraic looking:
+\[ \sum_{x_1 = 0}^1 \sum_{x_2 = 0}^1 \cdots \sum_{x_n = 0}^1 q(x_1, x_2, \ldots, x_n) = K ? \]
+then, prover says here's prime number \(p\) of \(2n\) bits, and verifier acknowledges. (in '89s only known that \(\prob{PRIMES} \in \NP\), so a proof should also be given by prover; but now we have \(\prob{PRIME} \in \P\).)
+
+\begin{fact}
+  the equation is true iff it's true under \(\bmod\ p\).
+\end{fact}
+
+key brilliant move: consider another univariate polynomial \(r(X_1)\) where \(X_1\) is ``indeterminate'':
+\[ r(X_1) = \sum_{x_2 = 0}^1 \cdots \sum_{x_n = 0}^1 q(X_1, x_2, \ldots, x_n) \bmod{p}\]
+we know \(\deg{r} \leq \deg{q} \leq 3m\), and \(r\)'s coeffs are in \([0, p)\), so the whole \(r\) can be written down in \(O(mn)\) bits.
+The verifier then checks \(r(0) + r(1) = K\).
+We're almost done here, only to check that the \(r\) verifier received is correct.
+Here verifier picks a random \(a \in [p-1]\), sends it to prover, and ask it to prove that
+\[ r(a) = \sum_{x_2 = 0}^1 \cdots \sum_{x_n = 0}^1 q(a, x_2, \ldots, x_n), \]
+which can be done inductively.
+
+Here, if the prover is lying, it must give a wrong \(r'\) to verifier, which can only agree with the true \(r\) on at most \(3m\) values since \(\deg(r - r') \leq \max(\deg r, \deg r') \leq 3m\), so the probability that the verifier is cheated in each step is extremely small since \(p\) is about \(2^{2n}\), and \(3m \leq 3 \times 2^n << 2^{2n}\).
+
+\section{Reading}
+
+\subsection{sipser 10.4 (Interactive Proof Systems)}
+
+Interactive proof systems provide a way to define a probabilistic analog of the class \NP, much like probabilistic polynomial time algorithms provide a probabilistic analog to \P.
+
+Formal definition of i.p.s.: Verifier \(V: \Sigma^* \times \Sigma^* \times^* \to \Sigma* \cup \setof{\it accept, reject}\), where the inputs are: input string (the statement), random input, and partial message history. Similarly, the prover \(P: \Sigma^* \times \Sigma^* \to \Sigma^*\).
+
+proof of \(\IP = \PSPACE\).
+
+\end{document}

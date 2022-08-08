@@ -1,0 +1,111 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 23: The Polynomial Hierarchy}
+\author{Marcythm}
+% \date{\today}
+\date{July 25, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+motivation:
+
+recall: \NP and \coNP
+
+\begin{observation}
+  \(\P = \NP \implies \NP = \coNP\) (contra: \(\NP \neq \coNP \implies \P \neq \NP\))
+\end{observation}
+
+\(\prob{ECLIQUE} = \setof{\encoding{G, k}: \text{\(G\) is a graph with a largest clique of exactly size \(k\)}}\)
+
+\(\prob{SMALLEST-CIRCUIT} = \setof{\encoding{C}: \text{\(C\) is the smallest circuit computing the function \(C_f\) that \(C\) computes}}\)
+
+\begin{notation}
+  \(Q^{n} u\) means \(Q u, |u| \leq m\) where \(Q \in \setof{\exists, \forall}\).
+\end{notation}
+
+\begin{definition}
+  \(L \in \Sigma_2\) if \(\exists\) poly-time TM \(V\), \(\exists\) polynomial \(p\) s.t.
+  \[ x \in L \iff \exists^{p(x)} u_1 \forall^{p(x)} u_2 : V(x, u_1, u_2) = 1 \]
+\end{definition}
+
+\begin{definition}
+  \(L \in \Pi_2\) if \(\exists\) poly-time TM \(V\), \(\exists\) polynomial \(p\) s.t.
+  \[ x \in L \iff \forall^{p(x)} u_1 \exists^{p(x)} u_2 : V(x, u_1, u_2) = 1 \]
+\end{definition}
+
+\begin{observation}
+  \(\Pi_2 = \co\Sigma_2\).
+\end{observation}
+
+\begin{claim}
+  \(\prob{ECLIQUE} \in \Sigma_2\).
+\end{claim}
+
+\begin{exercise}
+  \(\prob{SMALLEST-CIRCUIT} \in \Pi_2\).
+\end{exercise}
+
+\begin{notation}
+  \(\Sigma_0 = \Pi_0 = \P, \Sigma_1 = \NP = \exists \P, \Pi_1 = \coNP = \forall \P, \ldots, \Sigma_i = \exists \Pi_{i-1}, \Pi_i = \forall \Sigma_{i-1}\).
+\end{notation}
+
+\begin{observation}
+  \(\Sigma_i \subseteq \Sigma_{i+1} \cap \Pi_{i+1}\), \(\Pi_i \subseteq \Pi_{i+1} \cap \Sigma_{i+1}\).
+\end{observation}
+
+\begin{definition}[Polynomial Hierarchy]
+  \(\PH = \bigcup_{k \in \N} \Sigma_k = \bigcup_{k \in \N} \Pi_k\) contains those languages can be described by constant number of quantifiers.
+\end{definition}
+
+\begin{claim}
+  \(\PH \subseteq \PSPACE\).
+\end{claim}
+
+\begin{theorem}
+  \(\P = \NP \implies \P = \PH\).
+\end{theorem}
+
+\begin{theorem}
+  \(\Sigma_i = \Pi_i \implies \Sigma_i = \Pi_i = \PH\). (hierarchy ``collapses'' to the \(i\)th level)
+\end{theorem}
+
+Complete problems for \(\Sigma_i, \Pi_i, \PH\):
+Let \(\varphi(y_1, y_2, \ldots, y_i)\) be a boolean formula where each \(y_j\) is a vector (or sequence) of boolean variables.
+
+\begin{definition}
+  \(\Sigma_i\prob{-SAT} = \setof{\encoding{\varphi(y_1, y_2, \ldots, y_i)} : \exists z_1 \forall z_2 \cdots \varphi(z_1, z_2, \ldots, z_i) = 1}\)
+\end{definition}
+
+\begin{exercise}
+  \(\Sigma_i\prob{-SAT}\) is \(\Sigma_i\)-complete.
+\end{exercise}
+
+the same for \(\Pi_i\).
+
+\begin{claim}
+  If \(\exists L\) s.t. \(L\) is \PH-complete, then \(\exists i\) s.t. \(\PH = \Sigma_i\).
+\end{claim}
+
+\section{Reading}
+
+\subsection{sipser 10.3 (Alternation)}
+
+definition of Alternating Turing Machine, \ATIME, \ASPACE, \AP, \APSPACE, \AL
+
+\begin{theorem}
+  For \(f(n) \geq n\), we have \(\ATIME(f(n)) \subseteq \SPACE(f(n)) \subseteq \ATIME(f^2(n))\). \\
+  For \(f(n) \geq \log n\), we have \(\ASPACE(f(n)) = \TIME(2^{O(f(n))})\).
+\end{theorem}
+
+\begin{corollary}
+  \(\AL = \P, \AP = \PSPACE, \APSPACE = \EXP\).
+\end{corollary}
+
+definition of \PH.
+
+\end{document}

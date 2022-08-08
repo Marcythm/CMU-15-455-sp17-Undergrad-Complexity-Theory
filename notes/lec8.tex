@@ -1,0 +1,88 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 8: NP}
+\author{Marcythm}
+% \date{\today}
+\date{July 12, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+\begin{conjecture}
+  \( \P \neq \NP ( \iff \prob{3-SAT} \notin \P ) \)
+\end{conjecture}
+
+\begin{conjecture}[Exponential Time Hypothesis]
+  \( \exists \delta>0: \prob{3-SAT} \notin \TIME((1+\delta)^n)\)
+\end{conjecture}
+
+\begin{conjecture}[Strong ETH]
+  \( \forall \delta>0: \exists k: \prob{k-SAT} \notin \TIME((2-\delta)^n) \)
+\end{conjecture}
+
+\( \mathrm{SETH} \implies \mathrm{ETH} \implies \P \neq \NP \).
+
+\begin{theorem}[ABV '15]
+  SETH implies \( \forall \eps>0 \), cannot solve \prob{LCS} in time \(O(n^{2-\eps})\).
+\end{theorem}
+
+idea of \NP: for many problems \(\exists\) brute force algo, enumerate (exp many) ``candidate sol''s and check in poly-time if each is a genuine sol.\ e.g. \prob{ST-PATH}, \prob{HAMILTONIAN-PATH}, \prob{3-COL}, \prob{CIRCUIT-SAT}, \prob{COMPOSITE}. \\
+
+two features:
+\begin{enumerate}
+  \item[0.] ``candidate sol''s  are encodable by strings with polynomial length.
+  \item[1.] \(\exists\) poly-time algo to \ul{check} if a candidate sol is a genuine sol.
+\end{enumerate}
+
+Informally, a problem is in \NP if a checking algo exists. ``candidate sol'' are also called ``potential sol'', ``witness'', ``certificate'', etc. A problem highly believed not in \NP: \prob{UN-3COL}.
+
+\begin{definition}
+  An algorithm(TM) \(V\) is a {\it verifier for language \(L\)} if
+  \begin{enumerate}
+    \item \(V\) takes as input a pair \(\encoding{x, y}\)
+    \item \(\forall x: x \in L \iff \exists y: V(\encoding{x, y})\) accepts.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  Verifier \(V\) is said to be {\it ``polynomial time''} if \(V(\encoding{x, y})\) runs in time \(O(|x|^k)\) for some \(k \in \N\).
+\end{definition}
+
+\begin{remark}
+  Subtlety: \(V\)'s runtime is measured in terms of \(|x|\).
+\end{remark}
+
+\begin{definition}
+  \( \NP = \setof{L : \text{\(L\) has a poly-time verifier}} \)
+\end{definition}
+
+e.g. \( \prob{SQUARES} = \setof{\encoding{B} : B \in \N, \exists x \in \N: x^2 = B } \in \NP \). \( \prob{3COL} \in \NP \).
+
+Subtlety in verifier of \prob{SQUARE}: mark the input as \(\encoding{x, y}\), after interpreting \(x = \encoding{B}\), only read first \(|x|\) symbols of \(y\). If \(|y| > |x|\), then reject.
+
+\begin{theorem}
+  \( \P \in \NP \).
+\end{theorem}
+
+\begin{proof}
+  Let \(L \in \P\), thus \(\exists\) a poly-time TM \(M\) s.t. \(x \in L \iff M(x) \) accepts.
+  Consider the TM \(V\) that runs on input \(\encoding{x, y}\): Do \(M(x)\), then \ldots
+  \begin{enumerate}
+    \item Claim \(V\) is poly-time verifier. \ldots
+    \item Claim \(V\) verifies \(L\). \ldots
+  \end{enumerate}
+\end{proof}
+
+About \P = \NP, upcoming: Cook-Levin Theorem: \( \P = \NP \iff \prob{3SAT} \in \P \).
+
+\section{Reading}
+
+\subsection{Sipser 7.3 (The Class \NP)}
+
+definition of verifier, \NP (by verifiers), and \NTIME.
+
+\end{document}

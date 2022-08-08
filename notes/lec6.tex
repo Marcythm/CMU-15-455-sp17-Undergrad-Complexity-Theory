@@ -1,0 +1,53 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 6: Problems in \P}
+\author{Marcythm}
+% \date{\today}
+\date{July 10, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+Recap: Time Hierarchy Theorem \(\implies\) \(\exists\) languages decidable in exponential time but not in \P.
+
+\begin{definition}
+  \( \EXP = \bigcup_{k \in \N} \TIME\parens{2^{n^k}} = \text{languages decidable in \(2^{\poly(n)}\) time} \).
+\end{definition}
+
+\begin{fact}
+  \(\P \subsetneq \EXP\).
+\end{fact}
+
+\begin{enumerate}
+  \item \( \prob{(ST-)PATH} \in \EXP \), and with a cleverer algo, \( \prob{PATH} \in \P \).
+  \item \( \prob{2-COL} \in \EXP \), with a cleverer algo, \( \prob{2-COL} \in \P \) too.
+  \item \( \prob{3-COL} \in \EXP \), but believed not in \P.
+\end{enumerate}
+
+\begin{theorem}[BE '05]
+  \prob{3-COL} is in \(O(1.33^n)\) time.
+\end{theorem}
+
+\begin{enumerate}
+  \item[4.] \( \prob{LCS} \in \EXP\), and with techniques like memorization and dynamic programming, \( \prob{LCS} \in \P \).
+  \item[5.] \( \prob{3-CLIQUE} \in O(n^3) \).\ in \(O(n^2)\)? not sure.
+\end{enumerate}
+
+\begin{fact}
+  can do \prob{3-CLIQUE} in \(O(n^3 / \log^2 n)\) time, or \(O(n^{2.38})\) time.
+\end{fact}
+
+\begin{enumerate}
+  \item[6.] \( \prob{4-CLIQUE} \in \TIME(n^4) \).\ in \(\TIME(n^3)\)?
+  \item[7.] \prob{k-CLIQUE} within brute force is time \(O\parens{\binom{n}{k} \binom{k}{2}} = O(n^k)\): \( \prob{k-CLIQUE} \in \EXP \).\ in \P? don't know.
+\end{enumerate}
+
+\section{Reading}
+
+\subsection{Sipser 7.2 (The Class \P)}
+
+\end{document}

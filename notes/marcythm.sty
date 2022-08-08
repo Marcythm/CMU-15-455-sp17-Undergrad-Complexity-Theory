@@ -1,0 +1,300 @@
+\usepackage{amsmath,amssymb,amsthm,amsfonts,latexsym,bbm,xspace,graphicx,float,mathtools,mathdots}
+\usepackage{braket,caption,subcaption,ellipsis,xcolor,textcomp}
+\usepackage{combelow} %for you, Rusins Freivalds
+\usepackage[backref,colorlinks,citecolor=blue,bookmarks=true]{hyperref}
+\usepackage[nameinlink]{cleveref}
+\crefname{ineq}{inequality}{inequalities}
+\creflabelformat{ineq}{#2{\upshape(#1)}#3}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{enumitem}
+%\usepackage[protrusion=true,expansion=true]{microtype}   % slows compilation a lot
+
+% ======================
+
+\usepackage{svg}
+
+\usepackage[tikz]{mdframed} % boxes
+\usepackage{xspace} % to solve spacing for \P = {\sf P}
+\usepackage{indentfirst}
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+
+\usepackage{tikz, pgfplots}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+
+\usepackage{xeCJK}
+\setCJKmainfont{STKaiti}
+\setCJKsansfont{STKaiti}
+\setCJKmonofont{STKaiti}
+
+% ======================
+
+% environments
+\newtheorem{theorem}{Theorem}[section]
+
+%TODO: change this old hack to a better one from: http://tex.stackexchange.com/questions/51286/recalling-a-theorem
+\newtheorem*{namedtheorem}{\theoremname}
+\newcommand{\theoremname}{testing}
+\newenvironment{named}[1]{ \renewcommand{\theoremname}{#1} \begin{namedtheorem}} {\end{namedtheorem}}
+
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{answer}[theorem]{Answer}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{exercise}[theorem]{Exercise}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}[theorem]{Example}
+
+
+% probability and other mathops
+\renewcommand{\Pr}{\mathop{\bf Pr\/}}
+\newcommand{\E}{\mathop{\bf E\/}}
+\newcommand{\Ex}{\mathop{\bf E\/}}
+\newcommand{\Var}{\mathop{\bf Var\/}}
+\newcommand{\Cov}{\mathop{\bf Cov\/}}
+\newcommand{\stddev}{\mathop{\bf stddev\/}}
+\newcommand{\littlesum}{\mathop{{\textstyle \sum}}}
+\newcommand{\littleprod}{\mathop{{\textstyle \prod}}}
+
+
+% math terms -- figure out which are supposed to be operatorname / textnormal or what
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\polylog}{\operatorname{polylog}}
+\newcommand{\size}{\textnormal{size}}
+\newcommand{\avg}{\mathop{\textnormal{avg}}}
+\newcommand{\sgn}{\textnormal{sgn}}
+\newcommand{\dist}{\textnormal{dist}}
+\newcommand{\vol}{\textnormal{vol}}
+\newcommand{\spn}{\textnormal{span}}
+\newcommand{\supp}{\textnormal{supp}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\codim}{\operatorname{codim}}
+\newcommand{\diag}{\operatorname{diag}}
+
+% number systems
+\newcommand{\R}{\mathbbm R}
+\newcommand{\C}{\mathbbm C}
+\newcommand{\N}{\mathbbm N}
+\newcommand{\Z}{\mathbbm Z}
+\newcommand{\F}{\mathbbm F}
+\newcommand{\Q}{\mathbbm Q}
+
+\newcommand{\bbone}{\mathbbm 1}
+\newcommand{\Id}{\bbone}
+
+% complexity classes
+\newcommand{\prob}[1]{\text{\sf #1}\xspace}
+
+\newcommand{\co}{\text{\sf co-}}
+
+\newcommand{\TIME}{\text{\sf TIME}\xspace}
+\newcommand{\NTIME}{\text{\sf NTIME}\xspace}
+\renewcommand{\P}{\text{\sf P}\xspace}
+\newcommand{\NP}{\text{\sf NP}\xspace}
+\newcommand{\coNP}{\text{\sf coNP}\xspace}
+\newcommand{\EXP}{\text{\sf EXP}\xspace}
+
+\newcommand{\SPACE}{\text{\sf SPACE}\xspace}
+\newcommand{\NSPACE}{\text{\sf NSPACE}\xspace}
+\renewcommand{\L}{\text{\sf L}\xspace}
+\newcommand{\NL}{\text{\sf NL}\xspace}
+\newcommand{\coNL}{\text{\sf coNL}\xspace}
+\newcommand{\PSPACE}{\text{\sf PSPACE}\xspace}
+\newcommand{\NPSPACE}{\text{\sf NPSPACE}\xspace}
+\newcommand{\coNPSPACE}{\text{\sf coNPSPACE}\xspace}
+\newcommand{\EXPSPACE}{\text{\sf EXPSPACE}\xspace}
+
+\newcommand{\PTIME}{\text{\sf P}\xspace}
+\newcommand{\LOGSPACE}{\text{\sf L}\xspace}
+
+\newcommand{\RTIME}{\text{\sf RTIME}\xspace}
+\newcommand{\RP}{\text{\sf RP}\xspace}
+\newcommand{\coRP}{\text{\sf coRP}\xspace}
+\newcommand{\ZPP}{\text{\sf ZPP}\xspace}
+\newcommand{\BPP}{\text{\sf BPP}\xspace}
+
+\newcommand{\ATIME}{\text{\sf ATIME}\xspace}
+\newcommand{\ASPACE}{\text{\sf ASPACE}\xspace}
+\newcommand{\AP}{\text{\sf AP}\xspace}
+\newcommand{\APSPACE}{\text{\sf APSPACE}\xspace}
+\newcommand{\AL}{\text{\sf AL}\xspace}
+
+\newcommand{\PH}{\text{\sf PH}\xspace}
+
+\newcommand{\TC}{\text{\sf TC}\xspace}
+\newcommand{\AC}{\text{\sf AC}\xspace}
+\newcommand{\NC}{\text{\sf NC}\xspace}
+\newcommand{\SC}{\text{\sf SC}\xspace}
+\newcommand{\SZK}{\text{\sf SZK}\xspace}
+\newcommand{\AM}{\text{\sf AM}\xspace}
+\newcommand{\IP}{\text{\sf IP}\xspace}
+\newcommand{\MIP}{\text{\sf MIP}\xspace}
+\newcommand{\NEXP}{\text{\sf NEXP}\xspace}
+\newcommand{\BQP}{\text{\sf BQP}\xspace}
+
+% short forms
+\newcommand{\eps}{\epsilon}
+\newcommand{\lam}{\lambda}
+\newcommand{\dleta}{\delta}
+\newcommand{\simga}{\sigma}
+\newcommand{\vphi}{\varphi}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\wh}[1]{\widehat{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\ot}{\otimes}
+\newcommand{\zo}{\{0,1\}}
+% \newcommand{\co}{:}                       %\newcommand{\co}{\colon}
+\newcommand{\bdry}{\partial}
+\newcommand{\grad}{\nabla}
+\newcommand{\symmdiff}{\triangle} \newcommand{\symdiff}{\symmdiff}
+\newcommand{\half}{\tfrac{1}{2}}
+
+
+% calligraphic letters
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calJ}{\mathcal{J}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\calQ}{\mathcal{Q}}
+\newcommand{\calR}{\mathcal{R}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calU}{\mathcal{U}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calW}{\mathcal{W}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+\newcommand{\calZ}{\mathcal{Z}}
+
+% bold
+\newcommand{\bone}{\boldsymbol{1}}
+\newcommand{\bbeta}{\boldsymbol{\beta}}
+\newcommand{\bdelta}{\boldsymbol{\delta}}
+\newcommand{\bepsilon}{\boldsymbol{\epsilon}}
+\newcommand{\blambda}{\boldsymbol{\lambda}}
+\newcommand{\bomega}{\boldsymbol{\omega}}
+\newcommand{\bpi}{\boldsymbol{\pi}}
+\newcommand{\bphi}{\boldsymbol{\phi}}
+\newcommand{\bvphi}{\boldsymbol{\varphi}}
+\newcommand{\bpsi}{\boldsymbol{\psi}}
+\newcommand{\bsigma}{\boldsymbol{\sigma}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\btau}{\boldsymbol{\tau}}
+\newcommand{\ba}{\boldsymbol{a}}
+\newcommand{\bb}{\boldsymbol{b}}
+\newcommand{\bc}{\boldsymbol{c}}
+\newcommand{\bd}{\boldsymbol{d}}
+\newcommand{\be}{\boldsymbol{e}}
+\newcommand{\boldf}{\boldsymbol{f}}
+\newcommand{\bg}{\boldsymbol{g}}
+\newcommand{\bh}{\boldsymbol{h}}
+\newcommand{\bi}{\boldsymbol{i}}
+\newcommand{\bj}{\boldsymbol{j}}
+\newcommand{\bk}{\boldsymbol{k}}
+\newcommand{\bell}{\boldsymbol{\ell}}
+\newcommand{\bp}{\boldsymbol{p}}
+\newcommand{\bq}{\boldsymbol{q}}
+\newcommand{\br}{\boldsymbol{r}}
+\newcommand{\bs}{\boldsymbol{s}}
+\newcommand{\bt}{\boldsymbol{t}}
+\newcommand{\bu}{\boldsymbol{u}}
+\newcommand{\bv}{\boldsymbol{v}}
+\newcommand{\bw}{\boldsymbol{w}}
+\newcommand{\bx}{{\boldsymbol{x}}}
+\newcommand{\by}{\boldsymbol{y}}
+\newcommand{\bz}{\boldsymbol{z}}
+\newcommand{\bA}{\boldsymbol{A}}
+\newcommand{\bB}{\boldsymbol{B}}
+\newcommand{\bC}{\boldsymbol{C}}
+\newcommand{\bD}{\boldsymbol{D}}
+\newcommand{\bE}{\boldsymbol{E}}
+\newcommand{\bF}{\boldsymbol{F}}
+\newcommand{\bG}{\boldsymbol{G}}
+\newcommand{\bH}{\boldsymbol{H}}
+\newcommand{\bI}{\boldsymbol{I}}
+\newcommand{\bJ}{\boldsymbol{J}}
+\newcommand{\bL}{\boldsymbol{L}}
+\newcommand{\bM}{\boldsymbol{M}}
+\newcommand{\bP}{\boldsymbol{P}}
+\newcommand{\bR}{\boldsymbol{R}}
+\newcommand{\bS}{\boldsymbol{S}}
+\newcommand{\bT}{\boldsymbol{T}}
+\newcommand{\bU}{\boldsymbol{U}}
+\newcommand{\bV}{\boldsymbol{V}}
+\newcommand{\bW}{\boldsymbol{W}}
+\newcommand{\bX}{\boldsymbol{X}}
+\newcommand{\bY}{\boldsymbol{Y}}
+\newcommand{\bZ}{\boldsymbol{Z}}
+
+% bold calligraphic
+\newcommand{\bcalG}{\boldsymbol{\calG}} \newcommand{\calbG}{\bcalG}
+\newcommand{\bcalX}{\boldsymbol{\calX}} \newcommand{\calbX}{\bcalX}
+\newcommand{\bcalY}{\boldsymbol{\calY}} \newcommand{\calbY}{\bcalY}
+\newcommand{\bcalZ}{\boldsymbol{\calZ}} \newcommand{\calbZ}{\bcalZ}
+
+% left-right wrappers
+\DeclarePairedDelimiter\parens{\lparen}{\rparen}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\braces{\lbrace}{\rbrace}
+\DeclarePairedDelimiter\bracks{\lbrack}{\rbrack}
+\DeclarePairedDelimiter\angles{\langle}{\rangle}
+
+% words -- there's supposed to be something better than xspace though
+\newcommand{\Hastad}{H{\aa}stad\xspace}
+\newcommand{\Holder}{H{\"o}lder\xspace}
+\newcommand{\ErdosRenyi}{Erd\H{o}s--R\'{e}nyi\xspace}
+
+%%%%%%%%%%%%% hyphenation %%%%%%%%%%%%%
+\hyphenation{Naka-shima}
+
+
+%%%%%%%%%%%% document-writing macros %%%%%%%%%%%%
+
+%\newcommand{\ignore}[1]{*\marginpar{\tiny \em ignored part}}
+\newcommand{\ignore}[1]{}
+
+\newcommand{\myfig}[4]{\begin{figure}[H] \centering \includegraphics[width=#1\textwidth]{#2} \caption{#3} \label{#4} \end{figure}}
+
+\newcommand{\encoding}{\angles}
+\newcommand{\setof}{\braces}
+\renewcommand{\emptyset}{\varnothing}
+
+% mdframe style
+\mdfsetup{%
+  roundcorner=10pt,
+  linecolor=black
+}

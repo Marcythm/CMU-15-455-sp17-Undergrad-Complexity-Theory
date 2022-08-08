@@ -1,0 +1,124 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 5: The Time Hierarchy Theorem}
+\author{Marcythm}
+% \date{\today}
+\date{July 10, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+\begin{enumerate}
+  \item A language not in \P? \prob{HALTING}.
+
+  \item A \ul{decidable} language not in \P? \\
+        idea: task. simulate a TM for \(2^n\) steps
+  \begin{enumerate}
+    \item should be doable in \(\poly(2^n)\) time
+    \item shouldn't be doable in \(poly(n)\) time
+  \end{enumerate}
+
+  \item extended task: not doable in \(O(n^2)\) time, but doable in \ldots say \(O(n^8)\) time. \\
+        idea: simulating a TM for \(n^3\) steps
+\end{enumerate}
+
+\begin{definition}
+  Define a TM \(D\): on input \(\encoding{M, w}\), use a universal TM to simulate \(M\parens{\encoding{M, w}}\) for \(n^3\) steps. If it accepts, then \(D\) rejects. Conversely, if it rejects or times out, \(D\) accepts.
+\end{definition}
+
+\begin{fact}
+  \(D\) is a decider, therefore \(D\) defines a language.
+\end{fact}
+
+\begin{fact}
+  \(D\) runs in poly time. (depends on efficiency of UTM, maybe \(O\parens{\abs{\encoding{M}}^4 \cdot n^3 \cdot \log{n}} \leq O(n^8)\).)
+\end{fact}
+
+\begin{fact}
+  Let \(L\) be the language decided by \(D\), therefore \(L \in \TIME(n^8)\).
+\end{fact}
+
+\begin{claim}
+  \(L \notin \TIME(n^2)\).
+\end{claim}
+
+\begin{proof}
+  AFSOC (Assume for the sake of contradiction) that \(S\) is a decider TM for \(L\) with time \(t(n)\), which is \(O(n^2)\).
+  Consider running \(S\) on inputs of form \(\encoding{S, 0^l}\).
+  Let \(c = \encoding{S}\). \(S\) halts on such inputs in \(\leq t(l + c)\) time, which is \(O((l+c)^2)\), strictly less than \((l+c)^3\) for large enough \(l\), say \(l \geq l^*\).
+  Since \(S\) decides \(L\), \(S\parens{\encoding{S, 0^{l^*}}} = D\parens{\encoding{S, 0^{l^*}}}\), where the things \(D\) does is using UTM to simulate \(S\parens{\encoding{S, 0^{l^*}}}\) for \((l^* + c)^3\) steps, then it does the opposite.
+  Here \(S\) doesn't timeout, then \(S\parens{\encoding{S, 0^{l^*}}} = D\parens{\encoding{S, 0^{l^*}}} = \neg S\parens{\encoding{S, 0^{l^*}}}\).
+\end{proof}
+
+\begin{definition}
+  Bounded Halt/Accepts problem:
+  \[ \mathit{BA}_{n^3} = \setof{\encoding{M, w} : \text{\(M(w)\) accepts w/i \(\leq \abs{w}^3\) steps}} \]
+\end{definition}
+
+\begin{claim}
+  \(\mathit{BA}_{n^3} \in \TIME(n^8)\).
+\end{claim}
+
+\begin{claim}
+  \(\mathit{BA}_{n^3} \notin \TIME(n^2)\).
+\end{claim}
+
+\begin{proof}
+  AFSOC, \(B\) is a TM deciding \(\mathit{BA}_{n^3}\) in \(O(n^2)\) time, we'll show \(L \in \TIME(n^2)\).
+  To decide \(L\) on input \(\encoding{M, w}\), we need to check if \(M\parens{\encoding{M, w}}\) accs w/i \(n^3\) steps.
+  Run \(B\) on the string \(\encoding{M, \encoding{M, w}}\) (which can be prepared in \(O(n^2)\)), and do opposite, which also takes \(O(\abs{\encoding{M, \encoding{M, w}}}^2) = O(n^2)\) time.
+\end{proof}
+
+UTM with a clock: given \(\encoding{M, w}\), simulate \(M(w)\) for \(t(|w|)\) steps. For \(U_t\parens{\encoding{M, w}}\):
+\begin{enumerate}
+  \item Count \(|w|\): i.e. get \(n = |w|\) written on tape.
+  \item Compute \(T = t(n)\) and write it on tape.
+  \item Sim \(M(w)\), decrement \(T\) at each step till finishes or \(T = 0\).
+\end{enumerate}
+
+Time analysis:
+\begin{enumerate}
+  \item Doable in \(O(n^2)\) time, also in fact in \(O(n\log n)\) time. (Bring the counter together with the pointer, \(n\) moves with each time \(\log n\) symbols to shift, and \(n\) symbols to shift when the length increments, but only \(\log n\) times).
+  \item Depends on \(t(n)\)! \(t(n)\) could be uncomputable. If \(t(n)\) is simple, maybe \(\polylog(n)\) time.
+\end{enumerate}
+
+\begin{definition}
+  A function \(t: \N \to \N\) is ``time constructible'' if:
+  \begin{enumerate}
+    \item \(t(n) \geq n \log n\)
+    \item given a length-\(n\) string, can compute \(t(n)\) in time \(O(t(n))\).
+    \item Per \(1\) step of sim, takes \(O(|\encoding{M}|^3)\) time.
+  \end{enumerate}
+\end{definition}
+
+\begin{remark}
+  All ``normal'' functions \(\geq n \log n\) are ``time-constructible''.\ e.g. \(n\log n, n^2, n^{3.5}, 2^n, \ldots\)
+\end{remark}
+
+Deficiency:
+\begin{enumerate}
+  \item Gotta handle the clock: keep the clock with \(M\)'s state, thus additional \(\log t(n)\) bits slowdown per sim step.
+  \item Only handles alphabets \(\setof{0, 1, b}\): encode with \(\log |\Sigma|\) bits, thus a constant factor slowdown.
+\end{enumerate}
+
+\begin{theorem}
+  If \(t(n)\) is time-constructible, exists TM \(T_t\) s.t.\ given \(\encoding{M, w}\), \(U_t\) sims \(M(w)\) for \(t(|w|)\) steps in time \(O\parens{\abs{\encoding{M}}^4 t(n) \log t(n)}\).
+\end{theorem}
+
+\section{Reading}
+
+\subsection{Sipser 9.1 (Hierarchy Theorems)}
+
+\begin{enumerate}
+  \item space constructible
+  \item space hierarchy theorem and corollaries
+  \item time constructible
+  \item time hierarchy theorem and corollaries
+  \item \({\it EQ}_{\it REX}\) is \EXPSPACE-complete (TODO)
+\end{enumerate}
+
+\end{document}

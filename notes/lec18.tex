@@ -1,0 +1,106 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 18: \NL-Completeness and Logspace Reductions}
+\author{Marcythm}
+% \date{\today}
+\date{July 20, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+\begin{theorem}
+  For \(f(n) \geq \log n\), \( \NSPACE(f(n)) \subseteq \TIME(2^{O(f(n))}) \).
+\end{theorem}
+
+\begin{theorem}
+  For \(f(n) \geq \log n\), \( \NSPACE(f(n)) \subseteq \SPACE(f(n)^2) \).
+\end{theorem}
+
+\begin{corollary}
+  \( \NPSPACE \subseteq \PSPACE \).
+\end{corollary}
+
+\begin{corollary}
+  \( \NPSPACE = \PSPACE \).
+\end{corollary}
+
+\begin{claim}
+  \prob{ST-PATH} is ``\NL-complete''.
+\end{claim}
+
+How to define sensible reduction for logspace? \(\leq_m^P\) is a bad choice, since \L is not closed under it.
+
+Ideal: \(A \in \NL, A \leq B, B \in \L\), then \(A \in \L\).
+
+idea: When using reductions, must be as weak as the weakest class you care about.
+
+Need to define \(leq_m^L\), ``log-space reduction'', want:
+
+\begin{enumerate}
+  \item closure: \(A \leq_m^L B, B \in \L \implies A \in \L\), and \(B \in \NL \implies A \in \NL\).
+  \item transitivity: \(A \leq_m^L B, B \leq_m^L C \implies A \leq_m^L C\).
+\end{enumerate}
+
+\begin{definition}
+  \(A \leq_m^L B\) if \(\exists R: \setof{0, 1}^* \to \setof{0, 1}^*\) computable (write-once output tape) in \(O(\log n)\) space s.t. \(\forall x: x \in A \iff R(x) \in B\).
+\end{definition}
+
+model for space-bounded computation w/ output: read-only input tape, space-bounded (\(O(\log n)\)) r/w work tapes, write-once output tape.
+
+\begin{theorem}
+  \prob{ST-PATH} is ``\NL-complete''.
+\end{theorem}
+
+\begin{proof}
+  \( \prob{ST-PATH} \in \NL \).
+
+  Let \(A \in \NL\), we need to show \(A \leq_m^L \prob{ST-PATH}\).
+  Say \(N\) is an \(O(\log n)\)-space nondeterministic TM deciding \(A\).
+  Claim: exists a deterministic \(O(\log n)\)-space-computable \(R: \setof{0, 1}^* \to \setof{0, 1}^*\) that, given \(x \in \Sigma^n\), outputs config graph \(G_{N, x}\) and \(C_{\it start}, C_{\it acc}\).
+
+  Thus, \(x \in A \iff N(x) \text{ acc} \iff \exists\) path \(C_{\it start} \to C_{\it acc} \) in \(G_{N, x} \iff R(x) \in \prob{ST-PATH}\).
+\end{proof}
+
+\begin{theorem}
+  If \(P, Q: \setof{0, 1}^* \to \setof{0, 1}^*\) are computable in \(O(\log n)\) space, then so is \(R(x) = Q(P(x))\).
+\end{theorem}
+
+core technique: recalculate \(P(x)\) every time it is acquired by \(Q\) to save space.
+
+\begin{corollary}[closure]
+  \(A \leq_m^L B, B \in \L \implies A \in \L\).
+\end{corollary}
+
+\begin{corollary}[transitivity]
+  \(A \leq_m^L B, B \leq_m^L C \implies A \leq_m^L C\).
+\end{corollary}
+
+\begin{exercise}
+  \(A \leq_m^L, B \in \NL \implies A \in \NL\).
+\end{exercise}
+
+\section{Reading}
+
+\subsection{sipser 8.5 (\NL completeness)}
+
+definition of log space reducibility
+
+log space reducibility implies poly-time reducibility
+
+\begin{theorem}
+  \(A \leq_m^L B, B \in \L \implies A \in \L\).
+\end{theorem}
+
+\begin{theorem}
+  \prob{ST-PATH} is \NL-complete.
+\end{theorem}
+
+\begin{corollary}
+  \( \NL \subseteq \P \).
+\end{corollary}
+
+\end{document}

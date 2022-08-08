@@ -1,0 +1,108 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 28: Why is \P vs. \NP difficult?}
+\author{Marcythm}
+% \date{\today}
+\date{July 30, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+\begin{mdframed}
+  \P vs. \NP:
+  \begin{enumerate}
+    \item discussed by Gödel in 1956 letter to von Neumann
+    \item formalized 1970
+    \item open for 60+ years \ldots
+  \end{enumerate}
+  progress towards proving it = negligible (?), why so hard?
+\end{mdframed}
+
+Theorems about why \P vs. \NP is hard!
+Negative results we can prove:
+\begin{enumerate}
+  \item \prob{HALTS} is not computable
+  \item \(\EXP \nsubseteq \P\), T.H.T.: \(\exists A \in \TIME(T(n)) \backslash \TIME(o(T(n) / \log T(n)))\).
+\end{enumerate}
+
+Both results use ``diagonalization'' / ``simulation'': simulate and do the opposite.
+
+\begin{mdframed}
+  Hallmark of ``simulation results'': they hold equally well if both machines get the same oracle. e.g.
+  \begin{enumerate}
+    \item For any language \(A\), \(\exists L\) solvable by a time \(T(n)\) \(A\)-oracle TM, but not by a \(o(T(n) / \log T(n))\) one.
+    \item For any language \(A\), \(\NP^A \subseteq \PSPACE^A\).
+  \end{enumerate}
+  ``simulation / diagonalization arguments tend to go through word for word in any \(A\)-oracle world''
+\end{mdframed}
+
+\begin{theorem}[Baker-Gill-Solovay '75]
+  \(\exists\) language \(A, B\) s.t. \(\P^A = \NP^A, \P^B \neq \NP^B\).
+\end{theorem}
+
+This is a negative result about proof technique.
+
+\begin{proof}
+  For \(A\), \prob{TQBF} is a valid choice.
+  \[ \NP^\prob{TQBF} \subseteq \NPSPACE = \PSPACE \subseteq \P^\prob{TQBF} \]
+
+  Basic idea for \(B\): make \(B\) some kind of sparse language, then a NTM can just like guess the location of strings in \(B\), but a DTM cam not do so.
+
+  Given \(B\), define \(L_B = \setof{1^n : \exists x \in B, |x| = n}\), \(B_n := B \cap \setof{0, 1}^n\).
+
+  \begin{claim}
+    \(\forall B: L_B \in \NP^B\).
+  \end{claim}
+
+  Remaining task: design \(B\) s.t. \(L_B \notin \P^B\).
+  Construct \(B\) by diagonalization.
+  Intuition: for each \(n\), \(B_n\) will either be \(\emptyset\) or very sparse.
+  Every oracle-TM \(M^?\) has an encoding \(\encoding{M} \in \setof{0, 1}^*\), thus has a bijection to \(\N\). So for \(i \in \N\) we'll write \(M_i\) for the \(i\)th oracle-TM.
+  (Notice that one TM can have many different encodings, so we can just pick one with sufficiently large length.)
+
+  Design \(B\) in stages \(i = 0, 1, \ldots\), the \(i\)th stage will be designed to beat \(M_i\), i.e. ensure \(M_i\) doesn't decide \(L_B\) in poly time (actually much stronger, not in time \(2^n/10\)).
+  At stage \(i\):
+  \begin{enumerate}
+    \item pick suffciently large \(n\) s.t. haven't made any decision about \(B_n\) yet.
+    \item simulate \(M_i^?(1^n)\), if it makes an oracle query to some string \(y\) that has not been decided whether in \(B\) yet, answer no, and irrevocably decide \(y \notin B\).
+  \end{enumerate}
+
+  Here we want to ensure \(M_i^B\)'s answer about \(1^n \overset{?}{\in} L_B\) (after \(2^n/10\) steps) is wrong. \\ \indent
+  If \(M_i(1^n)\) accepts, it thinks \(1^n \in L_B \iff B_n \neq \emptyset\), then we just irrevocably decide \(B_n = \emptyset\). \\ \indent
+  If \(M_i(1^n)\) rejects, it thinks \(1^n \notin L_B \iff B_n = \emptyset\), but it can't ask all strings with length \(n\) within time \(2^n/10\), so there must be many strings not decided yet. Just irrevocably pick one, declare it is in \(B\).
+\end{proof}
+
+In '70s, people kept trying to prove \(\P \neq \NP\) anyway.
+In '80s, a new strategy became popular: try to prove a harder statement, since they really hate to reason about TMs. e.g. tried to show \NP doesn't have poly-size circuit family.
+
+[Håstad '88] \(\exists L \in \NP\) s.t. \(L\) doesn't have poly size, constant depth circuit families. But in fact this language is also in \P: the parity function.
+
+[2017] Maybe \(L \in \NP\) has poly-size log-depth circuits (maybe also for \(L \in \NEXP\), unknown.)
+
+[1994 Razborov-Rudich] Observed all known circuit lower bounds followed ``natural'' proof strategy. \hyperlink{https://en.wikipedia.org/wiki/Natural_proof}{ref}
+
+\begin{theorem}
+  Assuming well-believed hypothesis \(H\), \(\nexists\) ``natural'' proof that \NP has no poly-size circuits.
+\end{theorem}
+
+Here \(H\) = ``good pesudorandom generators exist'', is true if factoring product of two random \(n\)-bit primes is ``hard'', i.e. no \(2^{n^\eps}\) size circuits \(\forall \eps>0\).
+In other words, there are efficiently generatable random instances of hard problems, which is talked two lectures ago. (``random \prob{SAT} instances are hard'')
+
+\section{Reading}
+
+\subsection{sipser 9.2 (Relativization)}
+
+Limits of the Diagonalization Method: it's a simulation of one TM by another, where the simulating TM can determine the behavior of the other TM and then behave differently. Thus if we can prove \(\P = \NP\) by diagonalization, also \(\P^L = \NP^L\) for all language \(L\), but we can construct language \(A\) s.t. \(\P^A \neq \NP^A\); Similarly, if we can prove \(\P \neq \NP\) by diagonalization, also \(\P^L \neq \NP^L\) for all language \(L\), but we can construct language \(B\) s.t. \(\P^B = \NP^B\).
+
+\begin{theorem}[Baker-Gill-Solovay '75]
+  An oracle \(A\) exists whereby \(\P^A \neq \NP^A\);
+  An oracle \(B\) exists whereby \(\P^B = \NP^B\).
+\end{theorem}
+
+In summary, the relativization method tells us that to solve the \P versus \NP question, we must analyze computations, not just simulate them.
+
+\end{document}

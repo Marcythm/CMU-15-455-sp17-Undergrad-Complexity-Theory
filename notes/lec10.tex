@@ -1,0 +1,84 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 10: Reductions}
+\author{Marcythm}
+% \date{\today}
+\date{July 13, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+\begin{theorem}
+  If \(\prob{SAT} \in \P\), then \(\prob{4COL} \in \P\).
+\end{theorem}
+
+idea: given \(M_{\prob{SAT}}\) solving \prob{SAT} in poly-time, can build algo \(M_{\prob{4COL}}\) solving \prob{4COL} in poly-time, using \(M_{\prob{SAT}}\) as a subroutine. The whole idea is denoted as \( \prob{4COL} \leq^P \prob{SAT} \), which means \prob{4COL} is at most polynomial slower than \prob{SAT}.
+
+\begin{definition}
+  Let \(A, B\) be languages, \(A\) has a poly-time {\bf mapping reduction} to \(B\), written \(A \leq_m^P B\), if exists poly-time algo \(R: \setof{0, 1}^* \to \setof{0, 1}^*\), s.t. \(\forall x: x \in A \iff R(x) \in B\).
+\end{definition}
+
+\begin{theorem}
+  If \(A \leq_m^P B\), \(B \in \P\), then \(A \in \P\).
+\end{theorem}
+
+\begin{proof}
+  Given poly-time \(M_B\) for \(B\), reduction \(R\), \(M_B(R(x))\) decides \(x \overset{?}{\in} A\) in \(\poly(|x|)\) time.
+\end{proof}
+
+\begin{theorem}
+  \(\leq_m^P\) is transitive: if \(A \leq_m^P B, B \leq_m^P C\), then \(A \leq_m^P C\).
+\end{theorem}
+
+\begin{definition}
+  \( \prob{4CHROMA} = \setof{\encoding{G} : \text{\(G\)'s chromatic number is \(4\)}} \).
+\end{definition}
+
+\begin{claim}
+  \( \prob{4CHROMA} \leq_T^P \prob{SAT} \), where \(T\) stands for Turing, can use the subroutine many times.
+\end{claim}
+
+\begin{remark}
+  Here can not use \( \phi = \phi_4 \wedge \neg \phi_3 \), since \(\neg \phi_3\) is satisfiable can not imply \(\phi_3\) is not satisfiable.
+\end{remark}
+
+\begin{theorem}
+  If \(A \leq_T^P B\), \(B \in \P\), then \(A \in \P\).
+\end{theorem}
+
+\begin{theorem}
+  If \(A \leq_m^P B\), \(B \in \NP\), then \(A \in \NP\).
+\end{theorem}
+
+\begin{remark}
+  This theorem seemingly false for \(\leq_T^P\).
+\end{remark}
+
+\begin{theorem}
+  \( \prob{CIRCUIT-SAT} \leq_m^P \prob{FORMULA-SAT} \).
+\end{theorem}
+
+\begin{theorem}
+  \( \prob{CIRCUIT-SAT} \leq_m^P \prob{3-SAT} \).
+\end{theorem}
+
+upcoming: Cook-Levin Theorem
+
+\begin{theorem}[Cook-Levin Theorem]
+  \( \forall L \in \NP : L \leq_m^P \prob{CIRCUIT-SAT} \).
+\end{theorem}
+
+\section{Reading}
+
+\subsection{Sipser 7.4 (\NP-completeness)}
+
+\begin{enumerate}
+  \item poly-time reductions (mapping reduction)
+  \item Definition of NP-complete
+\end{enumerate}
+
+\end{document}

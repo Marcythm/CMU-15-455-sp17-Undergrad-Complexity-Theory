@@ -1,0 +1,96 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 1: Course Overview}
+\author{Marcythm}
+% \date{\today}
+\date{July 8, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+The main problem: What is the most ``efficient'' way to solve any computational task?
+
+\begin{mdframed}
+  Efficient with what resources?
+  \begin{enumerate}
+    \item time
+    \item space / memory
+    \item data structure accesses / interactions
+    \item random bits
+  \end{enumerate}
+\end{mdframed}
+
+\begin{mdframed}
+  e.g.\ the \prob{PATH} problem
+  \begin{enumerate}
+    \item Find a ``efficient'' algorithm for \prob{PATH} (451)
+    \item Prove that there's no faster algorithm (455)
+  \end{enumerate}
+\end{mdframed}
+
+Major tool: reductions
+
+\begin{remark}
+  Decrease the number of questions, without increasing the number of answers.
+\end{remark}
+
+\begin{mdframed}
+  Many open problems:
+  \begin{enumerate}
+    \item \P = \NP?: Is finding a solution as fast as recognizing one?
+    \item \P = \NC?: Is every algorithm efficiently parallelizable?
+    \item \P = \L?: Do algorithms ever need to allocate memory?
+    \item \P = \PSPACE?: Solvable w/o much memory implies solvable w/o much time?
+    \item \P = \BPP?: Can every efficient randomized algorithm be made deterministic?
+    \item \P = \prob{QuasiLIN}?: Can every ``efficient'' algorithm be made actually efficient? FALSE!
+  \end{enumerate}
+\end{mdframed}
+
+\begin{definition}
+  \textit{Alphabet} \(\Sigma\) is a finite nonempty set of \textbf{symbols}. e.g. \(\Sigma = \braces{0, 1}\).
+\end{definition}
+
+\begin{definition}
+  \(\Sigma^n\): strings of length exactly \(n\).\ e.g. \(\Sigma^2 = \braces{00, 01, 10, 11}\).
+\end{definition}
+
+\begin{definition}
+  \(\Sigma^* = \Sigma^0 \cup \Sigma^1 \cup \cdots = \bigcup_{n \geq 0} \Sigma^n\) is the set of all finite-length strings.
+\end{definition}
+
+\begin{definition}
+  \(\encoding{X}_{\Sigma}\) denotes a fixed ``reasonable'' encoding of mathematical object \(X\) by a string in \(\Sigma^*\).
+\end{definition}
+How to encode \(X\) in unary representation? \(\encoding{X}_{\braces{1}} = \encoding{1 \encoding{X}_{\braces{0, 1}}}_{\braces{1}}\).
+
+\begin{mdframed}
+  ``Reasonable'':
+  \begin{enumerate}
+    \item if \(X \neq Y\) then \(\encoding{X} \neq \encoding{Y}\).
+    \item ``easy'' conversion between \(\encoding{X}\) and data structure representing \(X\).
+    \item \(\encoding{X}\) shouldn't be ``much'' longer than it ``needs to be''.
+  \end{enumerate}
+\end{mdframed}
+
+TECHNICALLY we assume that every string corresponds to some object. (invalid string \(\to\) default obj.)
+
+\begin{mdframed}
+  Three kinds of computational problems:
+  \begin{enumerate}
+    \item Decision problem: a function \(\Sigma^* \to \setof{\text{yes, no}}\).\ e.g. IsPrime.
+    \item Function problem.\ input string, output string that is ``correct'' answer, always only one answer.\ e.g. PrimeFactorization.
+    \item Search problem: Similar to function problem  but the number of answer is unrestricted.\ e.g. FindPath: given \(\encoding{G, s, t}\), output \(\encoding{\text{a path from \(s\) to \(t\)}}\) or \(\encoding{\text{no such path exists}}\).
+  \end{enumerate}
+\end{mdframed}
+
+We mainly (WLOG) work with decision problems.
+
+\section{Reading}
+
+\subsection{Sipser 0.2 (Mathematical Notions and Terminology)}
+
+\end{document}

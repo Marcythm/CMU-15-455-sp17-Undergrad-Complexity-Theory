@@ -1,0 +1,80 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 19: From \P-Completeness to \PSPACE-Completeness}
+\author{Marcythm}
+% \date{\today}
+\date{July 21, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+today: A \P-complete problem (under \(\leq_m^L\)) \(C\): \(C \in \L (\NL, \NC) \iff \P \subseteq \L (\NL, \NC)\).
+
+Informally, \( \NC = \setof{L : \text{\(L\) solvable in \(\polylog(n)\) time, given \(\poly(n)\) processors}} \).
+
+\begin{fact}
+  \P-complete language: \prob{Horn-SAT}, \prob{Linear-Programming}, \prob{CIRCUIT-EVAL}
+\end{fact}
+
+\begin{fact}
+  Empirically, whenever \(A \leq_m^P B\), it seems that \(A \leq_m^L B\) too.
+\end{fact}
+
+\begin{theorem}
+  \( \forall A \in \NP: A \leq_m^L \prob{CIRCUIT-SAT} \leq_m^L \prob{3-SAT}\).
+\end{theorem}
+
+\begin{theorem}
+  Cook-Levin Theorem is true even under \(\leq_m^L\).
+\end{theorem}
+
+sketch of proof: similar to Cook-Levin, each gadget can be constructed in logspace.
+
+\begin{corollary}
+  \prob{CIRCUIT-EVAL} is \P-complete.
+\end{corollary}
+
+\begin{definition}
+  \prob{Q-SAT}, or \prob{TQBF}, where Q stands for quantified: Totally Quantified Boolean Formula.
+  \[ \prob{TQBF} = \setof{\text{true sentences of form \(Q_1 x_1 Q_2 x_2 \ldots \phi(x)\) where \(Q_i \in \setof{\forall, \exists}\)}} \]
+\end{definition}
+
+\prob{FORMULA-SAT} is a variant where all \(Q_i\)s are \(\exists\).
+
+\begin{proposition}
+  \( \prob{TQBF} \in \PSPACE \).
+\end{proposition}
+
+use recursive algo with linear space and exp time.
+
+\begin{theorem}
+  \prob{TQBF} is \PSPACE-hard.
+\end{theorem}
+
+\begin{proof}
+  similar to Cook-Levin, but use quantifiers to reduce size (on timestamp) from exp to poly.
+\end{proof}
+
+\begin{corollary}
+  \prob{TQBF} is \PSPACE-complete.
+\end{corollary}
+
+\section{Reading}
+
+\subsection{sipser 8.3 (\PSPACE completeness)}
+
+definition of \PSPACE-complete: poly-time reduction.
+
+\begin{remark}
+  Whenever we define complete problems for a complexity class, the reduction model must be more limited than the model used for defining the class itself.
+\end{remark}
+
+definition of \prob{TQBF}: prenex normal form (all quantifiers appears in the beginning)
+
+formula game, generalized geography, and reduction from \prob{GG} to \prob{TQBF}.
+
+\end{document}

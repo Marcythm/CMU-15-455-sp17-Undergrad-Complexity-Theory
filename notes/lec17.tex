@@ -1,0 +1,71 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 17: Savitch's Theorem \& NL}
+\author{Marcythm}
+% \date{\today}
+\date{July 20, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+\begin{theorem}[Savitch's Theorem]
+  For any function \(f: \N \to \R^+\), where \(f(n) \geq n\),
+  \[ \NSPACE(f(n)) \subseteq \SPACE(f^2(n)) \]
+\end{theorem}
+
+idea of Savitch's Theorem: ``Middle-first search''.
+
+\begin{algorithm}
+  \begin{algorithmic}
+    \Procedure{Path?}{$x, y, k$} \Comment{whether there is a path from $x$ to $y$ within $2^k$ steps}
+      \If{$k = 0$}
+        \State \Return truth value of $x = y$
+      \Else
+        \For{$w \in V$}
+          \If{\Call{Path?}{$x, w, k - 1$} \&\& \Call{Path?}{$w, y, k - 1$}}
+            \State \Return true
+          \EndIf
+        \EndFor
+      \EndIf
+      \State \Return false
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+need to store \(\log n\) stack variables (the depth of recursion), each with \(O(\log n)\) space, so \(O(\log^2 n)\) space in total. time complexity: \(O(n^k)\).
+
+\begin{definition}[Nondeterminism-based definition of \NL]
+  \( \NL = \NSPACE(\log n)\).
+\end{definition}
+
+\begin{proposition}
+  \( \prob{ST-PATH} \in \NL \).
+\end{proposition}
+
+\begin{proof}
+  Nondeterministically choose each step, and maintain a counter for length.
+\end{proof}
+
+\begin{theorem}
+  \( \NL \subseteq \P, \NL \in \SPACE(\log^2 n)\).
+\end{theorem}
+
+\begin{proof}
+  see reading section.
+\end{proof}
+
+\section{Reading}
+
+\subsection{sipser 8.4 (The Classes \L and \NL)}
+
+\begin{quote}
+  If \(M\) is a TM that has a separate read-only input tape and \(w\) is an input, a configuration of \(M\) on \(w\) is a setting of the state, the work tape, and the positions of the two tape heads. The input \(w\) is not a part of the configuration of \(M\) on \(w\).
+\end{quote}
+
+Thus total number of configurations of \(M\) on \(w\) is \(|Q| n f(n) |\Gamma|^{f(n)}\), i.e. \(n2^{O(f(n))}\), can extend Savitch's Theorem to \(f(n) \geq \log n\).
+
+\end{document}

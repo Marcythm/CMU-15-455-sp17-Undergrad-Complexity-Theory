@@ -1,0 +1,63 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 9: Nondeterminism}
+\author{Marcythm}
+% \date{\today}
+\date{July 12, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+Nondeterminism, is a nonrealistic ``feature'' you can add to models of computation, like a parallel fork.
+
+\begin{definition}
+  Nondeterministic algo accepts iff at least one branch accepts, rejects iff all branches reject.
+\end{definition}
+
+\begin{definition}
+  The running time of nondeterministic algo is the max running time over all branches.
+\end{definition}
+
+\begin{definition}
+  Nondeterministic algo is a decider if all branches halt.
+\end{definition}
+
+e.g. \prob{SAT} is solvable (decidable) in poly-time with a nondeterministic algo.
+
+terminology: ``\(N\) nondeterministically gusses \(x \in \setof{0, 1}^n\), then check if it satisfies \(\phi\).''
+
+\begin{definition}
+  \( \NTIME(f(n)) = \setof{L : \text{\(\exists\) a nondeterministic algo \(N\) deciding \(L\) in time \(O(f(n))\)}} \).
+\end{definition}
+
+\begin{definition}
+  \( \NP = \bigcup_{k \in \N} \NTIME(n^k) \).
+\end{definition}
+
+\begin{theorem}
+  Nondeterministic-defined \NP is literally the same set of language as verifier-defined \NP.
+\end{theorem}
+
+\begin{proof}
+  Prove this in two directions.
+  \begin{enumerate}
+    \item Say \(L\) has verifier \(V\), running in time \(k|x|^k\) on input \(\encoding{x, y}\). Define NTM \(N(x)\), ``guess'' \(y \in \setof{0, 1}^*\) of length \(\leq k|x|^k\), then does \(V(\encoding{x, y})\) deterministically, accept the input iff \(V(\encoding{x, y})\) accepts. Claim \(N(x)\) decides \(L\) in poly-time.
+    \item Say \(N\) is a nondeterministic algo deciding \(L\) runs in time \(\leq k|x|^k\) (on \(x\), does \(\leq k|x|^k\) ``goto-both''). Define \(V(\encoding{x, y})\): interpret \(y \in \setof{0, 1}^{k|x|^k}\), then simulate \(N(x)\), when it hits its \(i\)-th ``goto-both'', use \(y_i\) to decide which goto to follow. Claim \(V(\encoding{x, y})\) runs in \(\poly(|x|)\) time, and \(V\) verifies \(L\).
+  \end{enumerate}
+\end{proof}
+
+For every nondeterministic algo, can have a equivalent constrained form which consists of two parts, the first is a loop generating all branches, and the second is a normal deterministic algo.
+
+One reason why study nondeterminism is it helps you reason about \NP. Another reason is you can actually invent some even more complexity classes than just \NP using nondeterminism.\ e.g. \NEXP, which contains a lot of problems related to games, e.g. on a generalized chessboard whether can white win definitely.
+
+\section{Reading}
+
+\subsection{Sipser 1.2, 3.2, 3.3}
+
+descriptions about nondeterminism.
+
+\end{document}

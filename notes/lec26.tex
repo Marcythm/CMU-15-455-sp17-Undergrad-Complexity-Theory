@@ -1,0 +1,113 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 26: Beyond Worst-Case Analysis}
+\author{Marcythm}
+% \date{\today}
+\date{July 29, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+{\bf Assume \(\P \neq \NP\) for the rest lectures.}
+
+So \(\prob{3SAT} \notin \P\). Possibilities:
+\begin{enumerate}
+  \item Allow more than \(\poly(n)\) time to solve all instances.
+  \item Relax correctness: ``Approx Algos'', maybe \(\exists\) poly-time \(A\) s.t. \(\forall \phi \in \prob{3SAT}\), \(A(\phi)\) outputs an assignment satisfying 90\% of clauses.
+  \item Look for poly-time algo that correct on ``most'' inputs, may be \(\geq 99\%\) of all 3CNFs.
+\end{enumerate}
+Dream: Show hardness for 1, 2, 3, just assuming \(\P \neq \NP\). \\
+Backup Dream: Make one new basic assumption, try to derive many consequences.
+
+\begin{mdframed}
+  For point 1: \\
+  E.T.H.: \(\exists \delta_0 > 0: \prob{3SAT} \notin \TIME(2^{\delta_0 n})\), active field of research right now, conseqs of this in next lec. \\
+  If ETH is true, then no algo solve \prob{LCS} in \(O(n^2)\) time. \\
+  \(\prob{\~ETH} \implies \BPP = \P\) (mentioned in lec 22).
+\end{mdframed}
+
+\begin{mdframed}
+  For point 2: partially realized. \\
+  PCP Theorem ('93): \(\P \neq \NP \implies \) not exists poly-time \(A\) s.t. \(\forall \phi \in \prob{3SAT}\), \(A(\phi)\) outputs assignment satisfying \(\geq 99.999\ldots\%\) of clauses. \\
+  Håstad'99 get this fraction down to \(7/8 + \eps\). (optimal hardness result, since actually exists an algo that always output assignment satisfying \(7/8\) of clauses.)
+\end{mdframed}
+
+\begin{fact}
+  \(\exists\) efficient randomize algo \(A\) s.t. \(\E\bracks{\text{\# clauses satisfied by \(A(\phi)\)}} \geq 7m/8\).
+\end{fact}
+
+\begin{lemma}
+Let \(\phi(x)\) be a E3CNF, let \(a \in \setof{0, 1}^n\) be a uniformly random assignment, then
+  \[ \E\bracks{\text{\# clauses sat'd by \(a\)}} = \frac{7}{8} m \]
+\end{lemma}
+
+\begin{proof}
+  Let \(I_j = \begin{cases}
+    1, & \text{if \(a\) sats the \(j\)th clause of \(\phi\)} \\
+    0, & \text{otherwise}
+  \end{cases}\), \(j = 1 \ldots, m\). Then
+  \[ \E[\#] = \E[I_1] + \E[I_2] + \cdots + \E[I_n] = \sum_{i=1}^m \Pr[\text{\(i\)th clause is sat'd by \(x = a\)}] \]
+  For each clause, it's in the form \(x_i \vee x_j \vee \ol{x_k}\), so the probability it's sat'd is \(7/8\). Thus
+  \[ \E[\#] = \frac{7}{8} m \]
+\end{proof}
+
+Min-Bisection: Given \(G\), find \(S \subseteq V, |S| = n/2\) s.t. \# edges between \(S\) and \(\ol{S}\) is minimized. \NP-hard in '70s, and in 2017: no known poly-time algo that achieves \(\leq C \times \min\) (but can achieve \(\leq \log^2 n \times \min\)). Assume \(\P \neq \NP\), we can't rule outpoly-time algo getting factor \(1 + \eps\).
+
+\begin{remark}
+  The reductions between (\NP-complete) problems only preserve exact satisfiability, but not preserve approximation quality.
+\end{remark}
+
+Worst-Case Hardness: \(\forall\) poly-time \prob{SAT} solvers, \(\exists\) poly-time formula generator s.t. {\tt Solve(Gen(n))} fails (for sufficiently large \(n\)).
+
+Average-Case Hardness: \(\exists\) poly-time formula generator, \(\forall\) poly-time \prob{SAT} solvers {\tt Solve(Gen(n))} fails (with high probability) (for sufficiently large \(n\)). Here the generation algo always allowed to be randomized, since otherwise the solver can hard-code the solution.
+
+Average-Case Hardness is always desirable, for cryptography.
+
+\begin{definition}[Uniformly Random \prob{E3SAT} Instances]
+  \(n = \text{\# vars}\), \(\Delta = \text{``clause density''}\), \(m := \Delta n\).
+  \[ \phi = \text{Choose \(m\) random clauses independently, each clause is uniformly chosen from all \(2^3 \binom{n}{3}\) possibilities} \]
+\end{definition}
+
+Q0: Is \(\phi\) likely to be sat or unsat? Depends on \(\Delta\).
+
+\begin{exercise}
+  If \(\Delta > 5.2\), then \(\phi\) is exponentially unlikely to be sat.
+\end{exercise}
+
+\begin{theorem}
+  If \(\Delta \leq 0.16\), then \(\phi\) is exponentially unlikely to be unsat.
+\end{theorem}
+
+\begin{conjecture}
+  \(\exists\) ``phase transition'' at \(\Delta \approx 4.2667\), i.e. a sharp decrease of probability.
+\end{conjecture}
+
+\begin{exercise}[Chernoff bound]
+  If \(\Delta \geq 10\)ish, w.h.p. \(\phi\) is unsat, and every assignment \(a \in \setof{0, 1}^n\)  sats \(\leq 7/8 + \eps\) fraction of constraints.
+\end{exercise}
+
+Algo hardness: if \(\Delta < 4.2667\cdots\): solver should find a sat assignment.
+2017: poly-time algo that provably works when \(\Delta \leq 3.52\).
+Algos that seem to work in poly-time for \(\Delta \leq 4.266\cdots\). \\
+If \(\Delta > 4.2667\cdots\): solver should give a proof that \(\phi\) is unsat.
+
+\begin{definition}
+  A \(\Delta\prob{-3SAT}\)-Refuter is a poly-time algo that:
+  given any \(\phi\), either outputs ``unsat'' or ``no comment'';
+  is never wrong.
+  Given random \(\phi\) with param \(\Delta\), \(\Pr\bracks{\text{\(A(\phi)\) = unsat}} \geq 99\%\).
+\end{definition}
+
+In 2017: do \(\Delta-\prob{-3SAT}\)-Refuters exist for \(\Delta = C\)? Unknown. But for \(\Delta = \sqrt{n}\), it exists.
+
+\begin{hypothesis}[Feige's Hypothesis]
+  \(\forall\) constant \(\Delta\), \(\Delta-\prob{3SAT}\)-Refuter don't exist.
+\end{hypothesis}
+
+This hypothesis directly implies that \(\P \neq \NP\) (or there will exist poly-time algo for \prob{3SAT}, thus such refuter exists), Håstad's result (left as exercise), and no poly-time approx for Min-Bisection problem achieving \(\leq 4/3\).
+
+\end{document}

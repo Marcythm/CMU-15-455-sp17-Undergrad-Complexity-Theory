@@ -1,0 +1,64 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 14: Ladner's Theorem and Mahaney's Theorem}
+\author{Marcythm}
+% \date{\today}
+\date{July 17, 2022}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+\begin{theorem}[Ladner's Theorem]
+  Assume \(\P \neq \NP\), then \( \exists L \in \NP \) s.t. \( L \notin \P \) and \(L\) is not \NP-complete.
+\end{theorem}
+
+Today we are going to prove a weaker version of the Ladner's Theorem, with a stronger assumption that called E.T.H.
+
+\begin{definition}[Exponential Time Hypothesis]
+  \(\exists \delta > 0: \prob{3SAT} \notin \TIME(2^{\delta n})\)
+\end{definition}
+
+\begin{proof}
+  The idea to construct a not-so-hard language is based on padding: take hard problem \prob{3SAT}, kind of water it down halfway s.t.\ with the padding technique to make the input length kind of artificially longer s.t.\ will give some extra time to the algo but not so much.
+
+  Define \(L\):= ``\prob{3SAT} padded to length \(2^{\sqrt{n}}\)'' = \( \setof{\encoding{x, 1^{2^{\sqrt{|x|}}}} : x \in \prob{3SAT}} \)
+
+  3 things to check:
+  \begin{enumerate}
+    \item \(L \in \NP\). Prove this by directly giving an verifier.
+    \item \(L \notin \P\). Prove this by contra: \prob{3SAT} will have a subexp algo, which contradicts E.T.H.
+    \item \(L\) is not \NP-complete. Prove this by contra: \(\prob{3SAT} \leq_m^P L\), since \(L\) can be decided in time \(N^{O(\log N)}\), \prob{3SAT} can be solved in subexp time.
+  \end{enumerate}
+\end{proof}
+
+\begin{definition}
+  A language \(L \in \setof{0, 1}^+\) is {\it sparse} if \( \abs{L \cap \setof{0, 1}^n} \leq O(n^c) \) for some \(c\).
+\end{definition}
+
+Q1: Maybe exists algo \(A\) solving \prob{SAT} correctly, and running in \(\poly(n)\) time on ``almost all'' inputs. Here ``almost all'' means \(L = \setof{x : \text{\(A(x)\) takes more than \(\poly(n)\) time}}\) is sparse.
+
+Q2: Maybe exists algo \(A\) solving \prob{SAT} in \(\poly(n)\) time, and correctly on ``almost all'' inputs.
+
+The Mahaney's Theorem says nope if assuming \(\P \neq \NP\).
+
+\begin{theorem}[Mahaney's Theorem]
+  Assume \(\P \neq \NP\), then sparse \NP-complete language not exists.
+\end{theorem}
+
+\begin{proof}
+  idea: By contrapos. Suppose \(L\) is sparse and \NP-hard, we'll show \(\prob{SAT} \in \P\).
+
+  By assumption we know \(\prob{SAT} \leq_m^\P L\), i.e.\ exists a reduction \(R\) s.t. \( \phi \in \prob{SAT} \iff R(\phi) \in L \) which runs in poly time and \(\abs{R(\phi)} = O(\abs{\phi}^s)\). Since \(L\) is sparse, suppose \( \abs{L \cap \setof{0, 1}^n} \leq n^r \), then we can derive the key property: let \(T = n^{rs}\), for \(T+1\) formulas \(\phi_0, \phi_1, \ldots, \phi_T\) with length \(n\), by Pigeon Hole's Principle, either exists two formulas \(\phi_i, \phi_j\) s.t. \(R(\phi_i) = R(\phi_j)\), or \(\exists i: \phi_i \notin \prob{SAT}\) since all formulas after reduction are distinct, while there are only at most \(T\) such strings in \(L\).
+
+  We use the property this way: roughly, similar to the search-to-decision reduction, for instance \(\phi\), derive the full search tree like \( \phi = \phi[x_1 \mapsto 0] \vee \phi[x_1 \mapsto 1] = \ldots \), and in each depth of the search tree, use the key property to restrict the size of all clauses in \(T = \poly(n)\).
+
+  More specifically, to check which case a formula \(\phi_0\) belongs to, use the following strategy: denotes current \(T\) formulas as \(\phi_1, \ldots, \phi_T\), construct \(\psi_1 = \phi_0 \vee \phi_1, \ldots, \psi_T = \phi_0 \vee \phi_T\), then calculate \(R\) for all \(\psi\)s. If they are all distinct, then must exists a formula \(\psi_i \notin \prob{SAT}\), thus \(\phi_0\) is unsatisfiable and we can drop it. If \(R(\psi_i) = R(\psi_j)\), i.e. \(\psi_i\) and \(\psi_j\) have the same satisfiability, then we can drop either \(\phi_i\) or \(\phi_j\): if \(\phi_0\) is satisfiable, then drop which one won't affect the result; otherwise, if \(\phi_0\) is unsatisfiable, then \(\phi_i\) and \(\phi_j\) have the same satisfiability, thus drop which is the same.
+
+  All the steps above can be done in polynomial time, so the overall algorithm complexity is poly too.
+\end{proof}
+
+\end{document}

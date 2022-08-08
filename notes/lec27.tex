@@ -1,0 +1,80 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory \\ Lecture 27: Hardness within \P}
+\author{Marcythm}
+% \date{\today}
+\date{July 30, 2022}
+
+\newcommand{\diam}{\operatorname{diam}}
+
+\begin{document}
+\maketitle{}
+
+\section{Lecture Notes}
+
+\P = efficient? \(O(n^2)\) = efficient? What really awesome is like \(O(n \polylog(n))\).
+
+\begin{remark}
+  For \(O(n^2)\) time vs \(O(n \log n)\) the \ul{model} matters. (in this lecture we use RAM model)
+\end{remark}
+
+e.g. \prob{LCS} in time \(O(n^2)\) by dynamic programming. can we show it's not in time \(O(n^{1.99})\)? By THT we can know that \(\exists L\) s.t. \(L \in \TIME(n^2) \backslash \TIME(n^{1.99})\). Let base it on some assumption, dream: \(\P \neq \NP\). But we don't know how to do it, so make a backup dream, then derive many consequences.
+
+\begin{theorem}[2010's]
+  Assuming SETH, \(\forall \eps>0: \prob{LCS} \notin \TIME(n^{2-\eps})\).
+\end{theorem}
+
+there are tons of such results, \(\prob{EDIT-DIST} \geq n^2\), \(\prob{Graph-Diameter} \geq mn\), etc.
+
+\prob{3SUM}: give an array \(a\) of \(n\) integers, determine if \(\exists i, j, k: a_i + a_j + a_k = 0\). It's not too hard to get some algo like \(O(n^2 \log n)\). With assumption \(\prob{3SUM} \geq n^2\), we can derive: 3 points colinear \(\geq n^2\), hole in bunch of triangles \(\geq n^2\), etc.
+
+\prob{APSP}: all pairs shortest path, \(O(n^3)\). With assumption \(\prob{APSP} \geq n^3\), we have: Graph radius \(\geq n^3\), negtive triangles \(\geq n^3\), etc.
+
+\prob{k-CLIQUE}: \(\geq n^{\omega k/3}\), where \(\omega\) is the best number exponent of multiplying two \(n \times n\) matrices, i.e. \(O(n^{\omega})\) (till now \(\omega = 2.3\cdots\)). With assumption \(\prob{k-CLIQUE} \geq n^{\omega k/3}\), we have: CFG parsing \(\geq n^\omega\), RNA folding \(\geq n^\omega\), etc.
+
+fine-grained complexity: finer grain than just sth. is in \P or not in \P, figure out what is the fastest poly time algorithm.
+Reduction: for problem \(A\), instance \(x\), size \(n\), a reduction is mapping in time \(r(n)\) to problem \(B\), instance \(y\), size \(s(n)\), s.t. \(x \in A \iff y \in B\). Suppose have time \(t(n)\) algo for \(B\), can have time \(t(s(n)) + r(n)\) algo for \(A\). Conversely: no \(t(s(n)) + r(n)\) time algo for \(A\) implies no \(t(n)\) time algo for \(B\).
+
+\begin{conjecture}[Strong ETH]
+  \( \forall \eps>0: \exists k: \prob{k-SAT} \notin \TIME(2^{(1-\eps) n}) \)
+\end{conjecture}
+
+\begin{conjecture}[CNF-SETH]
+  \(\forall \eps>0\), for \prob{CNF-SAT} problems with \(m\) clauses, \(n\) variables, \(2^{(1-\eps)n} \poly(m)\) time required.
+\end{conjecture}
+
+\begin{definition}
+  \prob{DIAMETER}: give graph \(G\) with \(n\) vertices, \(m\) edges, compute \(\max_{u, v \in V} \dist(u, v)\).
+\end{definition}
+
+with Dijkstra's algo, \prob{DIAMETER} is about \(O(mn)\) time.
+Open Question: faster than \(O(mn)\) time?
+
+\begin{remark}
+  Try approximation when stuck on an algorithmic problem.
+\end{remark}
+
+ACIM'96: \(\tilde{O}(m \sqrt{n})\) time for ``factor 2/3 approximation'', i.e. find \(D\) s.t. \(2/3 \diam(G) \leq D \leq \diam(G)\).
+
+\begin{theorem}
+  \(\prob{CNF-SETH} \implies \nexists O(MN^{1-\eps})\) time \prob{DIAMETER} algo.
+\end{theorem}
+
+\begin{proof}
+  Reduction from a \prob{CNF-SAT} instance \(\phi(x_1, x_2, \ldots, x_n)\) with \(m\) clauses to a \prob{DIAMETER} instance \(G\) with \(N = 2^{n/2} + m + 2\) vertices and \(M=2^{n/2} O(m)\) edges. This reduction runs in time \(2^{n/2} \poly(m)\), very slow, but it's nothing comparing to the to-be-constructed \(2^{(1-\eps)n} \poly(m)\) algo for \prob{CNF-SAT}. By this reduction, \(\diam(G) = 2 + [\phi \in \prob{CNF-SAT}]\). If exists \(O(MN^{1-\eps})\) time algo for exactly (cool fact: even for \(2/3\) approximation) \prob{DIAMETER}, then exists time \(2^{(1-\eps/2) n}\poly(m)\) algo for \prob{CNF-SAT}, contradicts with the CNF-SETH.
+
+  details:
+  one vertex \(C_i\) for each clause, let \(C_i\) be a clique;
+  two hang-out vertices \(s, t\), connected to  \(C_i\).
+  (main trick) Setup \(2^{n/2}\) vertices \(X_\alpha\), one for each partial assignment \(\alpha\) to the first \(n/2\) variables. Similar \(2^{n/2}\) vertices \(Y_\beta\) for the other half.
+  Promise for every \(X_\alpha\) there is at least one edge connects to it, and the same for \(Y_\beta\).
+
+  Thus \(\diam(G) \leq 3\), and \(\diam(G) = 2\) iff \(\forall \alpha, \beta: \exists i: \{ (X_\alpha, C_i), (C_i, Y_\beta) \} \subseteq E\).
+
+  Connect \(X_\alpha\) to \(C_i\) iff \(C_i\) is \ul{not} (already) sat'd by \(\alpha\). e.g. for \(n = 4\), \(C_i\) for \(x_1 \vee x_2 \vee x_3\) will be connected to \(X_{00}\) but not \(X_{10}\).
+  Consider previous promise, if some \(X_\alpha\) is isolated, then we can know \(\phi \in \prob{CNF-SAT}\), thus abandon any construction and output any graph with diameter 3.
+\end{proof}
+
+\end{document}
