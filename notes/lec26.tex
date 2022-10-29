@@ -55,7 +55,7 @@ Let \(\phi(x)\) be a E3CNF, let \(a \in \setof{0, 1}^n\) be a uniformly random a
   \[ \E[\#] = \frac{7}{8} m \]
 \end{proof}
 
-Min-Bisection: Given \(G\), find \(S \subseteq V, |S| = n/2\) s.t. \# edges between \(S\) and \(\ol{S}\) is minimized. \NP-hard in '70s, and in 2017: no known poly-time algo that achieves \(\leq C \times \min\) (but can achieve \(\leq \log^2 n \times \min\)). Assume \(\P \neq \NP\), we can't rule outpoly-time algo getting factor \(1 + \eps\).
+Min-Bisection: Given \(G\), find \(S \subseteq V, |S| = n/2\) s.t. \# edges between \(S\) and \(\ol{S}\) is minimized. \NP-hard in '70s, and in 2017: no known poly-time algo that achieves \(\leq C \times \min\) (but can achieve \(\leq \log^2 n \times \min\)). Assume \(\P \neq \NP\), we can't rule out poly-time algo getting factor \(1 + \eps\).
 
 \begin{remark}
   The reductions between (\NP-complete) problems only preserve exact satisfiability, but not preserve approximation quality.
@@ -102,10 +102,10 @@ If \(\Delta > 4.2667\cdots\): solver should give a proof that \(\phi\) is unsat.
   Given random \(\phi\) with param \(\Delta\), \(\Pr\bracks{\text{\(A(\phi)\) = unsat}} \geq 99\%\).
 \end{definition}
 
-In 2017: do \(\Delta-\prob{-3SAT}\)-Refuters exist for \(\Delta = C\)? Unknown. But for \(\Delta = \sqrt{n}\), it exists.
+In 2017: do \(\Delta\prob{-3SAT}\)-Refuters exist for \(\Delta = C\)? Unknown. But for \(\Delta = \sqrt{n}\), it exists.
 
 \begin{hypothesis}[Feige's Hypothesis]
-  \(\forall\) constant \(\Delta\), \(\Delta-\prob{3SAT}\)-Refuter don't exist.
+  \(\forall\) constant \(\Delta\), \(\Delta\prob{-3SAT}\)-Refuter don't exist.
 \end{hypothesis}
 
 This hypothesis directly implies that \(\P \neq \NP\) (or there will exist poly-time algo for \prob{3SAT}, thus such refuter exists), Håstad's result (left as exercise), and no poly-time approx for Min-Bisection problem achieving \(\leq 4/3\).

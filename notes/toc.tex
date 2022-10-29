@@ -1,0 +1,350 @@
+\special{dvipdfmx:config z 0}
+\documentclass{article}
+\usepackage{marcythm}
+
+\title{Undergraduate Complexity Theory 15-455 \@@ CMU \\ TOC}
+\author{Marcythm}
+% \date{\today}
+\date{October 30, 2022}
+
+\begin{document}
+\maketitle{}
+
+% lecture 1
+\section{Course Overview}
+
+\textit{resources};
+\textit{efficient};
+famous open problems;
+notations ($\encoding{X}$).
+\par
+Three types of problems: \textit{decision} / \textit{function} / \textit{search}.
+
+
+% lecture 2
+\section{Turing Machines}
+
+\textit{language};
+\textit{Turing machine};
+\textit{decider};
+\textit{computation trace};
+\textbf{Church-Turing Thesis} (extended ver.)
+
+
+% lecture 3
+\section{Simulation and Turing Machine Variants}
+
+Standard model: 1-tape TM.
+\par
+Variations: 1-way / alphabet / multitape / RAM;
+Boolean Circuits;
+TM operation tricks;
+\textbf{simulation}.
+
+
+% lecture 4
+\section{Time Complexity and Universal Turing Machines}
+
+\textit{(time) complexity class} $\TIME(f(n))$;
+Speedup Theorem;
+\P;
+\textit{Universal TM};
+\textit{\textbf{diagonalization method}}.
+
+
+% lecture 5
+\section{The Time Hierarchy Theorem}
+
+\textbf{Time Hierarchy Theorem} (more time, more power).
+\par
+\textbf{diagonalization method} (important technique: simulation then do the opposite).
+\par
+\textit{time constructible}.
+
+
+% lecture 6
+\section{Problems in \P}
+
+by THT $\exists$ more than \P: \EXP.
+\par
+\prob{PATH}, \prob{2-COL}, \prob{LCS}, $c$-\prob{CLIQUE}.
+
+
+% lecture 7
+\section{SAT}
+
+different forms: \prob{CKT-SAT}, \prob{FORMULA-SAT} a.k.a. \prob{SAT}, \prob{CNF-SAT}, $k$-\prob{SAT} (descending on generality).
+\par
+All \NP-complete; \prob{CKT-EVAL} not \textit{parallelizable}; \textit{formula}; time complexity about $c$-\prob{SAT}.
+
+
+% lecture 8
+\section{\NP}
+
+conjectures: $\P \neq \NP$;
+\par
+\textbf{ETH}: $\exists \delta > 0: \prob{3-SAT} \notin \TIME((1+\delta)^n)$;
+\par
+\textbf{SETH}: $\forall \delta>0: \exists k: \prob{k-SAT} \notin \TIME((2-\delta)^n)$.
+\par
+verifier-based def for \NP. (In fact a trivial interactive proof system w/o randomness.)
+
+
+% lecture 9
+\section{Nondeterminism}
+
+\textit{nondeterminism} (a non-realistic feature for computation models);
+\NTIME;
+\NP.
+\par
+the equivalence between different views/defs about \NP (nondeterminism / verifier).
+
+
+% lecture 10
+\section{Reductions}
+
+\textit{\textbf{mapping reduction}};
+$\prob{3COL} \leq_m^\P \prob{4COL} \leq_m^\P \prob{SAT} \leq_m^\P \prob{CIRCUIT-SAT} \leq_m^\P \prob{3SAT}$. ($\prob{3SAT} \leq_m^\P \prob{3COL}$ in lec12)
+\par
+\textit{Turing reduction};
+$\prob{4CHROMA} \leq_T^\P \prob{SAT}$.
+\par
+These reductions are \textit{transitive}; \P is closed under both reductions, but \NP only under mapping reduction.
+
+
+% lecture 11
+\section{\NP-Completeness and the Cook-Levin Theorem}
+
+\textit{\NP-hard};
+\textit{\NP-complete}.
+\par
+\textbf{Cook-Levin Theorem}: $\forall L \in \NP: L \leq_m^\P \prob{SAT}$. (proof idea: computation is local.)
+\par
+Circuit-based proof of Cook-Levin.
+\par
+Reading: \textit{boolean circuit}, \textit{circuit family}, \textit{size/depth complexity}.
+
+
+% lecture 12
+\section{\NP-Completeness Reductions}
+
+$\prob{3SAT} \leq_m^\P \prob{E3SAT} \leq_m^\P \prob{NAE-3SAT} \leq_m^\P \prob{3COL} \leq_m^\P \prob{INDSET}$;
+\textit{CSP};
+\textit{\textbf{gadget}}.
+\par
+Reading: \NP-complete problems, \prob{VERTEX-COVER}, \prob{HAMPATH}, \prob{UHAMPATH}, \prob{SUBSET-SUM}.
+
+
+% lecture 13
+\section{Search-to-Decision, Padding, Dichotomy Theorems}
+
+\prob{SAT} is \textit{\textbf{downward-self-reducible}}; \textbf{search-to-decision reduction}.
+\par
+\textit{\textbf{padding}} (common technique: add meaningless contents to blow input size up);
+\par
+Dichotomy Theorem: Every boolean CSP is either in \P (\prob{2SAT}, \prob{XOR-SAT}, \prob{HornSAT}) or \NP-complete.
+\par
+Dichtomy Conjecture: every CSP is either in \P or \NP-complete.
+
+
+% lecture 14
+\section{Ladner's Theorem and Mahaney's Theorem}
+
+\textbf{Ladner's Theorem}: $\P \neq \NP \implies \exists L \in \NP \backslash \P$ s.t. $L$ is not \NP-complete.
+\par
+On class gives a weaker proof assuming ETH, with the idea basically the same: ``water down'' \prob{SAT} to make it not so hard, thus get a valid algo for \prob{SAT} which contradicts the assumption.
+\par
+\textbf{Mahaney's Theorem}: $\P \neq \NP \implies$ \textit{sparse} \NP-complete language not exists.
+\par
+Proof idea: reduce \prob{SAT} to $L$, the width of DSR's search tree is poly (restricted by $L$), thus $\prob{SAT} \in \P$.
+
+
+% lecture 15
+\section{\coNP}
+
+\coNP;
+\P is closed under complement;
+\prob{UNSAT} is \coNP-complete.
+\par
+$L \in \NP \cap \coNP$ has ``good characterization''.
+
+
+% lecture 16
+\section{Space Complexity}
+
+model for space complexity: individual work tape;
+space complexity class $\SPACE(f(n))$, \L, \PSPACE.
+\par
+Savitch's Theorem: $\prob{ST-PATH} \in \SPACE(\log^2 n)$. (for generalized version, see lec17)
+\par
+\textbf{Space Hierarchy Theorem}. (proof is similar to THT: diagonalization method)
+
+
+% lecture 17
+\section{Savitch's Theorem}
+
+\textbf{Savitch's Theorem}: $\forall f(n) \geq n: \NSPACE(f(n)) \subseteq \SPACE(f^2(n))$.
+(proof idea: ``middle-first search'')
+\par
+Nondeterminism-based def of \NL: $\NL = \NSPACE(\log n)$;
+$\prob{ST-PATH} \in \NL$.
+\par
+Reading:
+$\NL \subseteq \SPACE(\log^2 n), \NL \subseteq \P$;
+Can extend Savitch's Theorem to $f(n) \geq \log n$.
+
+
+% lecture 18
+\section{\NL-completeness and Logspace Reductions}
+
+$\forall f(n) \geq \log n: \NSPACE(f(n)) \subseteq \TIME(2^{O(f(n))}), \NSPACE(f(n)) \subseteq \SPACE(f(n)^2)$.
+\par
+\textit{logspace reduction} (to reason about logspace classes, so must be as weak as logspace): closure, transitivity.
+\par
+(logspace algos are usually insane since they can use crazy time for saving space.)
+\par
+\prob{ST-PATH} is \NL-complete.
+
+
+% lecture 19
+\section{From \P-completeness to \PSPACE-completeness}
+
+\P-complete languages: \prob{HornSAT}, \prob{LP}, \prob{CKT-EVAL};
+\par
+Empirically, polytime reduction implies logspace reduction. (also Cook-Levin's)
+\par
+\prob{TQBF} is \PSPACE-complete. (proof idea: use quantifiers to reduce size from exp to poly)
+\par
+(\PSPACE's essence seems to be ``games'', like \prob{TQBF}.)
+
+
+% lecture 20
+\section{The Immerman-Szelepcsényi Theorem}
+
+\NPSPACE = \coNPSPACE = \PSPACE by Savitch's. What about scaling down to logspace?
+\par
+\textbf{Immerman-Szelepcsényi Theorem}: $\ol{\prob{ST-PATH}} \in \NL (\NL = \coNL)$.
+\par
+Proof idea: one step each time from $s$ to exploit the locality of ``certificates''.
+
+
+% lecture 21
+\section{Randomized Complexity: \RP, \coRP, and \ZPP}
+
+new computation resource / power: randomness; can greatly reduce running time with error allowed.
+\par
+\textit{randomized time complexity class (one-sided error)}: $\RTIME(f(n))$, \RP, \coRP.
+\par
+\textit{zero-sided error}: $\ZPTIME(f(n))$, \ZPP.
+\par
+$\prob{COMPOSITES}, \prob{PRIMES} \in RP$;
+$\prob{PRIMES} \in \coRP$;
+\par
+$\P \subseteq \RP \subseteq \NP$, $\P \subseteq \coRP \subseteq \coNP$;
+$\ZPP = \RP \cap \coRP$.
+\par
+Reading: amplification lemma.
+
+
+% lecture 22
+\section{\BPP}
+
+\text{two-sided error}: $\BPTIME(f(n))$, \BPP. (named by ``bounded error probabilistic time'')
+\par
+$\prob{BPP} \subseteq \PSPACE \subseteq \EXP$;
+\par
+$\P = \NP \implies \P = \BPP$;
+\par
+$\BPP \subseteq \Ppoly$. (by amplification, then union bound)
+\par
+derandomization result: If \prob{3SAT} requires $\SIZE(2^{\delta n})$ for some $\delta > 0$, then $\P = \BPP$.
+(worst-case hardness $\implies$ strong average-case hardness $\implies$ PRNG)
+\par
+Reading: Read-Once Branching Programs, ${\it EQ}_{\rm ROBP} \in \BPP$ (proof idea: arithmetization on $\F_p$.)
+
+
+% lecture 23
+\section{The Polynomial Hierarchy}
+
+$\P = \NP \implies \NP = \coNP$;
+quantifier-based def of \PH;
+$\Sigma_i \prob{-SAT}$ is $\Sigma_i\P$-complete.
+\par
+\PH ``\textit{collapses}'' to the $i$-th level if $\Sigma_i\P = \Pi_i\P$. (e.g., if \P = \NP or \NP = \coNP)
+\par
+Reading: \textit{Alternating TM}, \ATIME, \ASPACE, \AP, \APSPACE, \AL.
+\par
+$\forall f(n) \geq n: \ATIME(f(n)) \subseteq \SPACE(f(n)) \subseteq \ATIME(f^2(n))$;
+$\forall f(n) \geq \log n: \ASPACE(f(n)) = \TIME(2^{O(f(n))})$.
+\par
+corollary: \AL = \P, \AP = \PSPACE, \APSPACE = \EXP.
+
+
+% lecture 24
+\section{Oracle TMs \& $\P^\NP$}
+
+\textit{Oracle TM};
+$\P^\NP \subseteq \Sigma_2\P$ (and thus $\P^\NP = \co\P^\NP \subseteq \co\Sigma_2\P = \Pi_2\P$). In fact $\P^\NP$ is just $\Delta_2\P = \Sigma_2\P \cap \Pi_2\P$.
+
+
+% lecture 25
+\section{Interactive Proofs: \IP = \PSPACE}
+
+A glimpse past the 80s from this lec; from mid 60s to the end of 80s (space/time/randomness) in prev.
+\par
+\textit{\textbf{Interactive Proof System}} (interaction + randomness): $\IP[k], \IP = \IP[\poly(n)]$.
+\par
+$\NP \subseteq \IP[1]$;
+$\BPP \subseteq \IP[0]$;
+$\IP \subseteq \PSPACE$.
+\par
+\textbf{The \textit{two-sided error} def of \IP can be \textit{automatically} upgraded to \textit{one-sided error}}.
+\par
+[Shamir '89] $\prob{TQBF} \in \IP$ is motivated by [LFKN '89] $\prob{\#3SAT} \in' \IP$. (proof idea: arithmetization on $\F_p$.)
+\par
+Reading: \IP is kind of a probabilistic analog of \NP, like the probabilistic analog \RP of \P.
+
+
+% lecture 26
+\section{Beyond Worst-Case Analysis}
+
+Assume $\P \neq \NP$ in next lecs. (Thus $\prob{3SAT} \notin \P$.)
+\par
+To solve \prob{3SAT}:
+1. allow more time;
+2. allow errors (correct for $\geq 99\%$ inputs);
+3. approx algos (satisfies 90\% clauses for every input).
+Dream is to show hardness for these 3 possibilities, just with $\P \neq \NP$.
+
+
+% lecture 27
+\section{Hardness within \P}
+
+What is really efficient maybe not \P, but $O(n \polylog(n))$;
+For these the \ul{model} matters! (RAM here)
+\par
+SETH $\implies \forall \eps>0: \prob{LCS} \notin \TIME(n^{2-\eps})$. Similar results for \prob{3SUM}, \prob{APSP}, \prob{k-CLIQUE}, etc.
+\par
+\textit{fine-grained complexity};
+care about the exact complexity of reductions, not just \P.
+\par
+some reductions between problems, with assumptions SETH / CNF-SETH.
+
+
+% lecture 28
+\section{Why is \P vs. \NP difficult?}
+
+History of \P vs. \NP, \& some negative results: \prob{HALTS} not computable; THT; both use diagonalization.
+\par
+\textbf{Baker-Gill-Solovay's Theorem}: $\exists A, B: \P^A = \NP^A, \P^B \neq \NP^B$. (negative result about \textit{proof tech}!)
+\par
+Proof idea: $A = \prob{TQBF}$, construct $B$ using diagonalization.
+\par
+Approaches after BGS:
+In '80s theorists try to prove harder statements;
+In '88 Hästad shows ckt lower-bound for \prob{PARITY};
+In '94 Razborov shows limitations of ``natural'' proof strategy.
+\par
+Assuming good PRNG exists, $\nexists$ ``natural'' proof that \NP has no poly-size ckts.
+
+\end{document}

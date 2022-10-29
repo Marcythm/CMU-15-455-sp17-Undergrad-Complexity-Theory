@@ -27,7 +27,7 @@ then show \(\prob{3COL} \leq_m^P \prob{INDEPENDENT-SET}\).
   Here all the 5 problems shown above are CSPs (Constraints Satisfaction Problem), but \prob{INDENPENDENT-SET} is not.
 \end{remark}
 
-To show \NP-completeness, given dicision problem \(L\),
+To show \NP-completeness, given decision problem \(L\),
 \begin{enumerate}
   \item Show \(L \in \NP\) (usually easy)
   \item Pick \NP-hard \(S\) (e.g. \prob{3SAT}), show \(S \leq_m^P L\).
@@ -101,7 +101,7 @@ In \prob{NAE-SAT} there are no difference between T and F (which is not the case
     % \end{figure}
 
     \item Encode NAE constraints in \(G_{\phi}\). \\
-    For each claus \(C\) in \(\phi\), add \ul{gadget}, subgraph that 3-colorable iff truth assignment induced by that 3-coloring satisfies \(C\).
+    For each clause \(C\) in \(\phi\), add \ul{gadget}, subgraph that 3-colorable iff truth assignment induced by that 3-coloring satisfies \(C\).
 
     \begin{figure}[h]
       \centering

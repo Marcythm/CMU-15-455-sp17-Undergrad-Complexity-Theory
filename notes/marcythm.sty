@@ -109,6 +109,7 @@
 \newcommand{\NP}{\text{\sf NP}\xspace}
 \newcommand{\coNP}{\text{\sf coNP}\xspace}
 \newcommand{\EXP}{\text{\sf EXP}\xspace}
+\newcommand{\ETIME}{\text{\sf E}\xspace}
 
 \newcommand{\SPACE}{\text{\sf SPACE}\xspace}
 \newcommand{\NSPACE}{\text{\sf NSPACE}\xspace}
@@ -126,7 +127,9 @@
 \newcommand{\RTIME}{\text{\sf RTIME}\xspace}
 \newcommand{\RP}{\text{\sf RP}\xspace}
 \newcommand{\coRP}{\text{\sf coRP}\xspace}
+\newcommand{\ZPTIME}{\text{\sf ZPTIME}\xspace}
 \newcommand{\ZPP}{\text{\sf ZPP}\xspace}
+\newcommand{\BPTIME}{\text{\sf BPTIME}\xspace}
 \newcommand{\BPP}{\text{\sf BPP}\xspace}
 
 \newcommand{\ATIME}{\text{\sf ATIME}\xspace}
@@ -143,10 +146,14 @@
 \newcommand{\SC}{\text{\sf SC}\xspace}
 \newcommand{\SZK}{\text{\sf SZK}\xspace}
 \newcommand{\AM}{\text{\sf AM}\xspace}
+\newcommand{\MA}{\text{\sf MA}\xspace}
 \newcommand{\IP}{\text{\sf IP}\xspace}
 \newcommand{\MIP}{\text{\sf MIP}\xspace}
 \newcommand{\NEXP}{\text{\sf NEXP}\xspace}
 \newcommand{\BQP}{\text{\sf BQP}\xspace}
+
+\newcommand{\Ppoly}{\text{\P/poly}}
+\newcommand{\SIZE}{\text{\sf SIZE}\xspace}
 
 % short forms
 \newcommand{\eps}{\epsilon}
@@ -264,14 +271,22 @@
 \newcommand{\bcalZ}{\boldsymbol{\calZ}} \newcommand{\calbZ}{\bcalZ}
 
 % left-right wrappers
-\DeclarePairedDelimiter\parens{\lparen}{\rparen}
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-\DeclarePairedDelimiter\norm{\lVert}{\rVert}
-\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
-\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
-\DeclarePairedDelimiter\braces{\lbrace}{\rbrace}
-\DeclarePairedDelimiter\bracks{\lbrack}{\rbrack}
-\DeclarePairedDelimiter\angles{\langle}{\rangle}
+\newcommand{\parens}[1]{\left\lparen #1 \right\rparen}
+% \DeclarePairedDelimiter\parens{\lparen}{\rparen}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+% \DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+% \DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+% \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+% \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\newcommand{\braces}[1]{\left\lbrace #1 \right\rbrace}
+% \DeclarePairedDelimiter\braces{\lbrace}{\rbrace}
+\newcommand{\bracks}[1]{\left\lbrack #1 \right\rbrack}
+% \DeclarePairedDelimiter\bracks{\lbrack}{\rbrack}
+\newcommand{\angles}[1]{\left\langle #1 \right\rangle}
+% \DeclarePairedDelimiter\angles{\langle}{\rangle}
 
 % words -- there's supposed to be something better than xspace though
 \newcommand{\Hastad}{H{\aa}stad\xspace}
