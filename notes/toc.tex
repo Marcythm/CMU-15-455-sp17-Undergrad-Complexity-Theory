@@ -255,7 +255,7 @@ $\prob{BPP} \subseteq \PSPACE \subseteq \EXP$;
 \par
 $\P = \NP \implies \P = \BPP$;
 \par
-$\BPP \subseteq \Ppoly$. (by amplification, then union bound)
+$\BPP \subseteq \PslashPoly$. (by amplification, then union bound)
 \par
 derandomization result: If \prob{3SAT} requires $\SIZE(2^{\delta n})$ for some $\delta > 0$, then $\P = \BPP$.
 (worst-case hardness $\implies$ strong average-case hardness $\implies$ PRNG)
@@ -346,5 +346,12 @@ In '88 Hästad shows ckt lower-bound for \prob{PARITY};
 In '94 Razborov shows limitations of ``natural'' proof strategy.
 \par
 Assuming good PRNG exists, $\nexists$ ``natural'' proof that \NP has no poly-size ckts.
+
+
+\section{Additional Remark}
+
+$\NP \neq \SPACE(n)$ (hw7-4), core tech: \NP is closed under poly-time reduction, but $\SPACE(n)$ is not.
+\par
+[Sipser-Lautemann] $\BPP \subseteq \Sigma_2 \cap \Pi_2$ (hw11-4), core tech: reduce ``randomized amount'' to quantifier.
 
 \end{document}
